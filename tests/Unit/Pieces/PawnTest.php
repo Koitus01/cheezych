@@ -2,10 +2,16 @@
 
 namespace App\Tests\Unit\Pieces;
 
-class PawnTest extends PhpUnit
+use App\Domain\Pieces\Pawn;
+use PHPUnit\Framework\TestCase;
+
+class PawnTest extends TestCase
 {
     public function testMovementPattern(): void
     {
+        $pawn = new Pawn();
+        $movementPattern = $pawn->getMovementPattern();
+
 
     }
 }
