@@ -16,7 +16,9 @@ class GameController extends AbstractController
         $gameExists = (bool) rand(0, 1);
         if ($gameExists) {
             $id = 23;
-            return $this->redirectToRoute('game-play', ['id' => $id]);
+            return $this->redirectToRoute('game-play', [
+                'id' => $id, 'game_info' => []
+            ]);
         } else {
             return $this->render('game/waiting.twig');
         }
