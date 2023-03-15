@@ -45,6 +45,12 @@ class PlayerTest extends TestCase
         $this->assertTrue($p->isBlack());
     }
 
+    public function testGetSide()
+    {
+        $p = new Player($this->name(), Side::WHITE);
+        $this->assertEquals(Side::WHITE, $p->getSide());
+    }
+
     private static function name(): string
     {
         return 'Koitus';
