@@ -3,8 +3,15 @@
 namespace App\Tests\Unit;
 
 use App\Domain\Board;
+use App\Domain\Config\BoardConfig;
+use App\Domain\Enums\Color;
 use App\Domain\Exceptions\UnknownXCoordinateException;
 use App\Domain\Exceptions\UnknownYCoordinateException;
+use App\Domain\Pieces\Bishop;
+use App\Domain\Pieces\King;
+use App\Domain\Pieces\Knight;
+use App\Domain\Pieces\Queen;
+use App\Domain\Pieces\Rook;
 use App\Domain\Square;
 use PHPUnit\Framework\TestCase;
 
@@ -13,34 +20,45 @@ class BoardTest extends TestCase
     public function testResetBoard()
     {
         $b = new Board();
-        $b->reset();
+        $resetResult = $b->reset();
 
-        $expectedSquares[1][1] = Square::create(1, 1);
-        $expectedSquares[1][2] = Square::create(1, 2);
-        $expectedSquares[1][3] = Square::create(1, 3);
-        $expectedSquares[1][4] = Square::create(1, 4);
-        $expectedSquares[1][5] = Square::create(1, 5);
-        $expectedSquares[1][6] = Square::create(1, 6);
-        $expectedSquares[1][7] = Square::create(1, 7);
-        $expectedSquares[1][8] = new Square(1, 8);
+        $expectedSquares[BoardConfig::MIN_COORDINATE][1] = Square::create(1, 1, new Rook(Color::WHITE));
+        $expectedSquares[BoardConfig::MIN_COORDINATE][2] = Square::create(1, 2, new Knight(Color::WHITE));
+        $expectedSquares[BoardConfig::MIN_COORDINATE][3] = Square::create(1, 3, new Bishop(Color::WHITE));
+        $expectedSquares[BoardConfig::MIN_COORDINATE][4] = Square::create(1, 4, new Queen(Color::WHITE));
+        $expectedSquares[BoardConfig::MIN_COORDINATE][5] = Square::create(1, 5, new King(Color::WHITE));
+        $expectedSquares[BoardConfig::MIN_COORDINATE][6] = Square::create(1, 6, new Bishop(Color::WHITE));
+        $expectedSquares[BoardConfig::MIN_COORDINATE][7] = Square::create(1, 7, new Knight(Color::WHITE));
+        $expectedSquares[BoardConfig::MIN_COORDINATE][8] = Square::create(1, 8, new Rook(Color::WHITE));
 
-        $expectedSquares[2][1] = new Square(2, 1);
-        $expectedSquares[2][2] = new Square(2, 2);
-        $expectedSquares[2][3] = new Square(2, 3);
-        $expectedSquares[2][4] = new Square(2, 4);
-        $expectedSquares[2][5] = new Square(2, 5);
-        $expectedSquares[2][6] = new Square(2, 6);
-        $expectedSquares[2][7] = new Square(2, 7);
-        $expectedSquares[2][8] = new Square(2, 8);
+        $expectedSquares[BoardConfig::MAX_COORDINATE][1] = Square::create(1, 1, new Rook(Color::BLACK));
+        $expectedSquares[BoardConfig::MAX_COORDINATE][2] = Square::create(1, 2, new Knight(Color::BLACK));
+        $expectedSquares[BoardConfig::MAX_COORDINATE][3] = Square::create(1, 3, new Bishop(Color::BLACK));
+        $expectedSquares[BoardConfig::MAX_COORDINATE][4] = Square::create(1, 4, new Queen(Color::BLACK));
+        $expectedSquares[BoardConfig::MAX_COORDINATE][5] = Square::create(1, 5, new King(Color::BLACK));
+        $expectedSquares[BoardConfig::MAX_COORDINATE][6] = Square::create(1, 6, new Bishop(Color::BLACK));
+        $expectedSquares[BoardConfig::MAX_COORDINATE][7] = Square::create(1, 7, new Knight(Color::BLACK));
+        $expectedSquares[BoardConfig::MAX_COORDINATE][8] = Square::create(1, 8, new Rook(Color::BLACK));
 
-        $this->assertEquals($expectedSquares, $b->getSquares());
+        $this->assertEquals($expectedSquares[BoardConfig::MIN_COORDINATE], $resetResult[BoardConfig::MIN_COORDINATE]);
+        $this->assertEquals($expectedSquares[BoardConfig::MAX_COORDINATE], $resetResult[BoardConfig::MAX_COORDINATE]);
+        $this->assertNull($resetResult[rand(3, 6)][rand(1, 8)]->getPiece());
     }
 
     public function testGetSquare()
     {
         $b = new Board();
         $b->reset();
-        $b->getSquare(1, 2);
+        $expectedSquare = Square::create(1,2, new Knight(Color::WHITE));
+        $result = $b->getSquare(1, 2);
+
+        $this->assertEquals($expectedSquare, $result);
+    }
+
+    public function testGetSquaresWithoutResetWillBeEmpty()
+    {
+        $b = new Board();
+        $this->assertEmpty($b->getSquares());
     }
 
     public function testGetSquareWithUnknownYCoordinate()
@@ -48,7 +66,8 @@ class BoardTest extends TestCase
         $this->expectException(UnknownYCoordinateException::class);
 
         $b = new Board();
-        $b->getSquare(1, 2);
+        $b->reset();
+        $b->getSquare(48, 2);
     }
 
     public function testGetSquareWithUnknownXCoordinate()
@@ -56,6 +75,7 @@ class BoardTest extends TestCase
         $this->expectException(UnknownXCoordinateException::class);
 
         $b = new Board();
-        $b->getSquare(1, 2);
+        $b->reset();
+        $b->getSquare(1, 25);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Domain\Pieces;
 
-use App\Domain\Color;
+use App\Domain\Enums\Color;
 
 abstract class AbstractPiece
 {
@@ -18,7 +18,12 @@ abstract class AbstractPiece
 
     public function isWhite()
     {
+        return $this->color === Color::WHITE;
+    }
 
+    public function isBlack()
+    {
+        return $this->color === Color::BLACK;
     }
 
 
