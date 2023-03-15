@@ -95,36 +95,37 @@ class Game
     }
 
     /**
-     * @return Player
+     * @return Player|null
      */
-    public function getCurrentTurn(): Player
+    public function getCurrentTurn(): ?Player
     {
         return $this->currentTurn;
     }
 
     /**
      * @param Player $currentTurnPlayer
-     * @throws GameAlreadyFinishedException
-     * @throws NoPlayersInGameException
-     * @throws PlayerIsAlreadyInTurnException
-     * @throws NotYourGameException
+     * TODO: выкидывать ли эксепшены при зафейленных проверках?
      */
     public function setCurrentTurn(Player $currentTurnPlayer): void
     {
         if ($currentTurnPlayer->getGameId() !== $this->id) {
-            throw new NotYourGameException;
+            return;
+            #throw new NotYourGameException;
         }
 
         if (empty($this->players)) {
-            throw new NoPlayersInGameException;
+            return;
+            #throw new NoPlayersInGameException;
         }
 
         if ($this->result) {
-            throw new GameAlreadyFinishedException;
+            return;
+            #throw new GameAlreadyFinishedException;
         }
 
         if ($this->currentTurn === $currentTurnPlayer) {
-            throw new PlayerIsAlreadyInTurnException;
+            return;
+            #throw new PlayerIsAlreadyInTurnException;
         }
 
         $this->currentTurn = $currentTurnPlayer;
@@ -140,12 +141,12 @@ class Game
 
     /**
      * @param GameResult $result
-     * @throws GameAlreadyFinishedException
      */
     public function setResult(GameResult $result): void
     {
         if ($this->result) {
-            throw new GameAlreadyFinishedException;
+            return;
+            #throw new GameAlreadyFinishedException;
         }
         $this->result = $result;
     }

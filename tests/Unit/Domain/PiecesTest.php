@@ -33,11 +33,11 @@ class PiecesTest extends TestCase
         $this->assertEquals(PieceName::PAWN, $p->getName());
     }
 
-    public function testMovementPattern(): void
+/*    public function testMovementPattern(): void
     {
         $pawn = new Pawn(Side::WHITE);
         $movementPattern = $pawn->getMovementPattern();
 
 
-    }
+    }*/
 }

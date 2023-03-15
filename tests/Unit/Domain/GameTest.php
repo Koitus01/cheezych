@@ -6,9 +6,6 @@ use App\Domain\Board;
 use App\Domain\Enums\GameResult;
 use App\Domain\Enums\GameStatus;
 use App\Domain\Enums\Side;
-use App\Domain\Exceptions\GameAlreadyFinishedException;
-use App\Domain\Exceptions\NotYourGameException;
-use App\Domain\Exceptions\PlayerIsAlreadyInTurnException;
 use App\Domain\Exceptions\PlayersHaveSameSideException;
 use App\Domain\Game;
 use App\Domain\Player;
@@ -59,10 +56,11 @@ class GameTest extends TestCase
 
     public function testCannotSetResultSecondTime()
     {
-        $this->expectException(GameAlreadyFinishedException::class);
         $g = new Game($this->gameId());
         $g->setResult(GameResult::BLACK_WIN);
         $g->setResult(GameResult::WHITE_WIN);
+
+        $this->assertEquals(GameResult::BLACK_WIN, $g->getResult());
     }
 
     public function testSetCurrentTurn()
@@ -75,39 +73,36 @@ class GameTest extends TestCase
         $this->assertEquals($player1, $g->getCurrentTurn());
     }
 
+    #TODO: подумать над необходимость этого теста
     public function testCannotSetTurnOnTheSamePlayer()
     {
-        $this->expectException(PlayerIsAlreadyInTurnException::class);
-
         $g = new Game($this->gameId());
         $player1 = new Player($this->player1Name(), Side::WHITE, $this->gameId());
         $player2 = new Player($this->player2Name(), Side::BLACK, $this->gameId());
         $g->setPlayers($player1, $player2);
         $g->setCurrentTurn($player1);
         $g->setCurrentTurn($player1);
+
+        $this->assertEquals($player1, $g->getCurrentTurn());
     }
 
     public function testSetCurrentTurnWithNoPlayersGameWillFail()
     {
-        $this->expectException(PlayerIsAlreadyInTurnException::class);
-
         $g = new Game($this->gameId());
         $player1 = new Player($this->player1Name(), Side::WHITE, $this->gameId());
-        $player2 = new Player($this->player2Name(), Side::BLACK, $this->gameId());
-        $g->setPlayers($player1, $player2);
         $g->setCurrentTurn($player1);
-        $g->setCurrentTurn($player1);
+        $this->assertNull($g->getCurrentTurn());
     }
 
     public function testSetCurrentTurnWithNonGamePlayerWillFail()
     {
-        $this->expectException(NotYourGameException::class);
-
         $g = new Game($this->gameId());
         $player1 = new Player($this->player1Name(), Side::WHITE, $this->gameId());
         $player2 = new Player($this->player2Name(), Side::BLACK, $this->gameId());
         $g->setPlayers($player1, $player2);
         $g->setCurrentTurn(new Player('Bibi', Side::WHITE, 2));
+
+        $this->assertNull($g->getCurrentTurn());
     }
 
     private function gameId(): int
