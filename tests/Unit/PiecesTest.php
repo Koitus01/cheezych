@@ -3,6 +3,7 @@
 namespace App\Tests\Unit;
 
 use App\Domain\Enums\Color;
+use App\Domain\Enums\PieceName;
 use App\Domain\Pieces\Pawn;
 use PHPUnit\Framework\TestCase;
 
@@ -24,6 +25,12 @@ class PiecesTest extends TestCase
     {
         $p = new Pawn(Color::BLACK);
         $this->assertTrue($p->isBlack());
+    }
+
+    public function testGetPawnName()
+    {
+        $p = new Pawn(Color::WHITE);
+        $this->assertEquals(PieceName::PAWN, $p->getName());
     }
 
     public function testMovementPattern(): void
