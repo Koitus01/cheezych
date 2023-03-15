@@ -2,18 +2,18 @@
 
 namespace App\Domain\Pieces;
 
-use App\Domain\Enums\Color;
+use App\Domain\Enums\Side;
 use App\Domain\Enums\PieceName;
 
 abstract class AbstractPiece
 {
-    public readonly Color $color;
+    public readonly Side $color;
     protected PieceName $name;
 
     /**
-     * @param Color $color
+     * @param Side $color
      */
-    public function __construct(Color $color)
+    public function __construct(Side $color)
     {
         $this->color = $color;
     }
@@ -25,12 +25,12 @@ abstract class AbstractPiece
 
     public function isWhite(): bool
     {
-        return $this->color === Color::WHITE;
+        return $this->color === Side::WHITE;
     }
 
     public function isBlack(): bool
     {
-        return $this->color === Color::BLACK;
+        return $this->color === Side::BLACK;
     }
 
     abstract public function getMovementPattern();

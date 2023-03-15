@@ -2,7 +2,7 @@
 
 namespace App\Domain\Enums;
 
-enum Color: string
+enum Side: string
 {
     case WHITE = 'white';
     case BLACK = 'black';

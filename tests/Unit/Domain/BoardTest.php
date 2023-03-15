@@ -4,7 +4,7 @@ namespace App\Tests\Unit\Domain;
 
 use App\Domain\Board;
 use App\Domain\Config\BoardConfig;
-use App\Domain\Enums\Color;
+use App\Domain\Enums\Side;
 use App\Domain\Exceptions\UnknownXCoordinateException;
 use App\Domain\Exceptions\UnknownYCoordinateException;
 use App\Domain\Pieces\Bishop;
@@ -22,23 +22,23 @@ class BoardTest extends TestCase
         $b = new Board();
         $resetResult = $b->reset();
 
-        $expectedSquares[BoardConfig::MIN_COORDINATE][1] = Square::create(1, 1, new Rook(Color::WHITE));
-        $expectedSquares[BoardConfig::MIN_COORDINATE][2] = Square::create(1, 2, new Knight(Color::WHITE));
-        $expectedSquares[BoardConfig::MIN_COORDINATE][3] = Square::create(1, 3, new Bishop(Color::WHITE));
-        $expectedSquares[BoardConfig::MIN_COORDINATE][4] = Square::create(1, 4, new Queen(Color::WHITE));
-        $expectedSquares[BoardConfig::MIN_COORDINATE][5] = Square::create(1, 5, new King(Color::WHITE));
-        $expectedSquares[BoardConfig::MIN_COORDINATE][6] = Square::create(1, 6, new Bishop(Color::WHITE));
-        $expectedSquares[BoardConfig::MIN_COORDINATE][7] = Square::create(1, 7, new Knight(Color::WHITE));
-        $expectedSquares[BoardConfig::MIN_COORDINATE][8] = Square::create(1, 8, new Rook(Color::WHITE));
+        $expectedSquares[BoardConfig::MIN_COORDINATE][1] = Square::create(1, 1, new Rook(Side::WHITE));
+        $expectedSquares[BoardConfig::MIN_COORDINATE][2] = Square::create(1, 2, new Knight(Side::WHITE));
+        $expectedSquares[BoardConfig::MIN_COORDINATE][3] = Square::create(1, 3, new Bishop(Side::WHITE));
+        $expectedSquares[BoardConfig::MIN_COORDINATE][4] = Square::create(1, 4, new Queen(Side::WHITE));
+        $expectedSquares[BoardConfig::MIN_COORDINATE][5] = Square::create(1, 5, new King(Side::WHITE));
+        $expectedSquares[BoardConfig::MIN_COORDINATE][6] = Square::create(1, 6, new Bishop(Side::WHITE));
+        $expectedSquares[BoardConfig::MIN_COORDINATE][7] = Square::create(1, 7, new Knight(Side::WHITE));
+        $expectedSquares[BoardConfig::MIN_COORDINATE][8] = Square::create(1, 8, new Rook(Side::WHITE));
 
-        $expectedSquares[BoardConfig::MAX_COORDINATE][1] = Square::create(1, 1, new Rook(Color::BLACK));
-        $expectedSquares[BoardConfig::MAX_COORDINATE][2] = Square::create(1, 2, new Knight(Color::BLACK));
-        $expectedSquares[BoardConfig::MAX_COORDINATE][3] = Square::create(1, 3, new Bishop(Color::BLACK));
-        $expectedSquares[BoardConfig::MAX_COORDINATE][4] = Square::create(1, 4, new Queen(Color::BLACK));
-        $expectedSquares[BoardConfig::MAX_COORDINATE][5] = Square::create(1, 5, new King(Color::BLACK));
-        $expectedSquares[BoardConfig::MAX_COORDINATE][6] = Square::create(1, 6, new Bishop(Color::BLACK));
-        $expectedSquares[BoardConfig::MAX_COORDINATE][7] = Square::create(1, 7, new Knight(Color::BLACK));
-        $expectedSquares[BoardConfig::MAX_COORDINATE][8] = Square::create(1, 8, new Rook(Color::BLACK));
+        $expectedSquares[BoardConfig::MAX_COORDINATE][1] = Square::create(1, 1, new Rook(Side::BLACK));
+        $expectedSquares[BoardConfig::MAX_COORDINATE][2] = Square::create(1, 2, new Knight(Side::BLACK));
+        $expectedSquares[BoardConfig::MAX_COORDINATE][3] = Square::create(1, 3, new Bishop(Side::BLACK));
+        $expectedSquares[BoardConfig::MAX_COORDINATE][4] = Square::create(1, 4, new Queen(Side::BLACK));
+        $expectedSquares[BoardConfig::MAX_COORDINATE][5] = Square::create(1, 5, new King(Side::BLACK));
+        $expectedSquares[BoardConfig::MAX_COORDINATE][6] = Square::create(1, 6, new Bishop(Side::BLACK));
+        $expectedSquares[BoardConfig::MAX_COORDINATE][7] = Square::create(1, 7, new Knight(Side::BLACK));
+        $expectedSquares[BoardConfig::MAX_COORDINATE][8] = Square::create(1, 8, new Rook(Side::BLACK));
 
         $this->assertEquals($expectedSquares[BoardConfig::MIN_COORDINATE], $resetResult[BoardConfig::MIN_COORDINATE]);
         $this->assertEquals($expectedSquares[BoardConfig::MAX_COORDINATE], $resetResult[BoardConfig::MAX_COORDINATE]);
@@ -49,7 +49,7 @@ class BoardTest extends TestCase
     {
         $b = new Board();
         $b->reset();
-        $expectedSquare = Square::create(1,2, new Knight(Color::WHITE));
+        $expectedSquare = Square::create(1,2, new Knight(Side::WHITE));
         $result = $b->getSquare(1, 2);
 
         $this->assertEquals($expectedSquare, $result);

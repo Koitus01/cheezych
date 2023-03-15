@@ -12,11 +12,7 @@ class Game
      * @var Player[]
      */
     private array $players;
-    private Player $whitePlayer;
-    private Player $blackPlayer;
     private GameStatus $status;
-    private Player $winner;
-    private Player $loser;
     private Player $currentTurn;
 
     /**
@@ -52,38 +48,6 @@ class Game
     }
 
     /**
-     * @return Player
-     */
-    public function getWhitePlayer(): Player
-    {
-        return $this->whitePlayer;
-    }
-
-    /**
-     * @param Player $whitePlayer
-     */
-    public function setWhitePlayer(Player $whitePlayer): void
-    {
-        $this->whitePlayer = $whitePlayer;
-    }
-
-    /**
-     * @return Player
-     */
-    public function getBlackPlayer(): Player
-    {
-        return $this->blackPlayer;
-    }
-
-    /**
-     * @param Player $blackPlayer
-     */
-    public function setBlackPlayer(Player $blackPlayer): void
-    {
-        $this->blackPlayer = $blackPlayer;
-    }
-
-    /**
      * @return GameStatus
      */
     public function getStatus(): GameStatus
@@ -97,38 +61,6 @@ class Game
     public function setStatus(GameStatus $status): void
     {
         $this->status = $status;
-    }
-
-    /**
-     * @return Player
-     */
-    public function getWinner(): Player
-    {
-        return $this->winner;
-    }
-
-    /**
-     * @param Player $winner
-     */
-    public function setWinner(Player $winner): void
-    {
-        $this->winner = $winner;
-    }
-
-    /**
-     * @return Player
-     */
-    public function getLoser(): Player
-    {
-        return $this->loser;
-    }
-
-    /**
-     * @param Player $loser
-     */
-    public function setLoser(Player $loser): void
-    {
-        $this->loser = $loser;
     }
 
     /**
