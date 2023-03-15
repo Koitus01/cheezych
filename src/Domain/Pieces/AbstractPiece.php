@@ -7,15 +7,15 @@ use App\Domain\Enums\PieceName;
 
 abstract class AbstractPiece
 {
-    public readonly Side $color;
+    public readonly Side $side;
     protected PieceName $name;
 
     /**
-     * @param Side $color
+     * @param Side $side
      */
-    public function __construct(Side $color)
+    public function __construct(Side $side)
     {
-        $this->color = $color;
+        $this->side = $side;
     }
 
     public function getName(): PieceName
@@ -25,12 +25,12 @@ abstract class AbstractPiece
 
     public function isWhite(): bool
     {
-        return $this->color === Side::WHITE;
+        return $this->side === Side::WHITE;
     }
 
     public function isBlack(): bool
     {
-        return $this->color === Side::BLACK;
+        return $this->side === Side::BLACK;
     }
 
     abstract public function getMovementPattern();

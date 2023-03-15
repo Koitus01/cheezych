@@ -9,10 +9,10 @@ use PHPUnit\Framework\TestCase;
 
 class PiecesTest extends TestCase
 {
-    public function testGetColor()
+    public function testGetSide()
     {
         $p = new Pawn(Side::WHITE);
-        $this->assertEquals(Side::WHITE, $p->color);
+        $this->assertEquals(Side::WHITE, $p->side);
     }
 
     public function testIsWhite()
