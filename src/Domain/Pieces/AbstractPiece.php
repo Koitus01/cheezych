@@ -33,7 +33,7 @@ abstract class AbstractPiece
         return $this->side === Side::BLACK;
     }
 
-    abstract public function getMovementPattern();
+    abstract public function isValidMovement(int $yFrom, int $xFrom, int $yTo, int $xTo);
 
     abstract public function getCapturePattern();
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Actions;
+namespace App\Application\UseCase;
 
 class StartGameAction
 {

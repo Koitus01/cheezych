@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\Integration\Application\Actions;
+namespace App\Tests\Integration\Application\UseCase;
 
-use App\Application\Actions\StartGameAction;
+use App\Application\UseCase\StartGameAction;
 use App\Tests\Unit\Domain\Actions\GameRepository;
 use PHPUnit\Framework\TestCase;
 

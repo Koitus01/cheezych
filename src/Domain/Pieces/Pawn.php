@@ -8,7 +8,7 @@ class Pawn extends AbstractPiece
 {
     protected PieceName $name = PieceName::PAWN;
 
-    public function getMovementPattern()
+    public function isValidMovement(int $yFrom, int $xFrom, int $yTo, int $xTo)
     {
         // TODO: Implement getMovementPattern() method.
     }
