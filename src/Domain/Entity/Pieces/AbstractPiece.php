@@ -2,6 +2,7 @@
 
 namespace App\Domain\Entity\Pieces;
 
+use App\Domain\Config\BoardConfig;
 use App\Domain\Enums\PieceName;
 use App\Domain\Enums\Side;
 
@@ -13,7 +14,7 @@ abstract class AbstractPiece
     /**
      * @param Side $side
      */
-    public function __construct(Side $side)
+    public function __construct(Side $side = Side::WHITE)
     {
         $this->side = $side;
     }
@@ -32,8 +33,7 @@ abstract class AbstractPiece
     {
         return $this->side === Side::BLACK;
     }
-
-    abstract public function isValidMovement(int $yFrom, int $xFrom, int $yTo, int $xTo);
+    abstract public function isValidMovement(int $yFrom, int $xFrom, int $yTo, int $xTo): bool;
 
     abstract public function getCapturePattern();
 }

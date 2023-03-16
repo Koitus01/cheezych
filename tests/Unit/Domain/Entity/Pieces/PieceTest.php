@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Tests\Unit\Domain;
+namespace App\Tests\Unit\Domain\Entity\Pieces;
 
 use App\Domain\Entity\Pieces\Pawn;
 use App\Domain\Enums\PieceName;
 use App\Domain\Enums\Side;
 use PHPUnit\Framework\TestCase;
 
-class PiecesTest extends TestCase
+class PieceTest extends TestCase
 {
     public function testGetSide()
     {
@@ -31,6 +31,12 @@ class PiecesTest extends TestCase
     {
         $p = new Pawn(Side::WHITE);
         $this->assertEquals(PieceName::PAWN, $p->getName());
+    }
+
+    public function testOutOfBoardCoordinatesIsNotValid()
+    {
+        $p = new Pawn(Side::WHITE);
+        $this->assertFalse($p->isValidMovement(9, -1, 3, 1));
     }
 
 /*    public function testMovementPattern(): void

@@ -5,9 +5,14 @@ namespace App\Domain\Entity\Pieces;
 class Rook extends AbstractPiece
 {
 
-    public function isValidMovement(int $yFrom, int $xFrom, int $yTo, int $xTo)
+    public function isValidMovement(int $yFrom, int $xFrom, int $yTo, int $xTo): bool
     {
-        // TODO: Implement getMovementPattern() method.
+        # the rook cannot move diagonally
+        if ($yFrom !== $yTo && $xFrom !== $xTo) {
+            return false;
+        }
+
+        return true;
     }
 
     public function getCapturePattern()

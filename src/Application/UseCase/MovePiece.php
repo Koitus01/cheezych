@@ -3,6 +3,7 @@
 namespace App\Application\UseCase;
 
 use App\Application\DTO\CoordinatesDTO;
+use App\Domain\Config\BoardConfig;
 use App\Domain\Entity\Square;
 use App\Domain\Repository\GameRepositoryInterface;
 
@@ -26,7 +27,20 @@ class MovePiece
         if (!$this->validateMovement($squareFrom, $squareTo)) {
             return false;
         }
-        #cannot put the piece to square with same color piece
+
+        #TODO: think where to move these conditions
+        if ($moveFrom->y > BoardConfig::MAX_COORDINATE || $moveTo->y > BoardConfig::MAX_COORDINATE) {
+            return false;
+        }
+        if ($moveFrom->x < BoardConfig::MIN_COORDINATE || $moveTo->x < BoardConfig::MIN_COORDINATE) {
+            return false;
+        }
+
+        if ($moveFrom->y === $moveTo->y && $moveFrom->x === $moveTo->x) {
+            return false;
+        }
+
+        return true;
 
     }
 
@@ -35,6 +49,7 @@ class MovePiece
         $pieceFrom = $squareFrom->getPiece();
         $pieceTo = $squareTo->getPiece();
 
+        #cannot put the piece to square with same color piece
         if ($pieceFrom->side === $pieceTo->side) {
             return false;
         }

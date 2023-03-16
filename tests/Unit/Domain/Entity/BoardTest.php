@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Unit\Domain;
+namespace App\Tests\Unit\Domain\Entity;
 
 use App\Domain\Config\BoardConfig;
 use App\Domain\Entity\Board;
