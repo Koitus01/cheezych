@@ -44,7 +44,7 @@ class BishopTest extends TestCase
         $this->assertFalse($result);
     }
 
-    public function provideNotDiagonallyCoordinates(): Generator
+    public static function provideNotDiagonallyCoordinates(): Generator
     {
         yield 'coordinates: 1, 2, 1, 25' => [
              [

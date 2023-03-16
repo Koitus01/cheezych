@@ -24,7 +24,7 @@ class QueenTest extends TestCase
         $this->assertFalse($result);
     }
 
-    public function provideValidMovements()
+    public static function provideValidMovements()
     {
         yield 'coordinates: 1, 5, 1, 8' => [
             [

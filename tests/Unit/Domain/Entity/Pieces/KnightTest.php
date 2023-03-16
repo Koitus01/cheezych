@@ -50,7 +50,7 @@ class KnightTest extends TestCase
         $this->assertFalse($result);
     }
 
-    public function provideValidCoordinates()
+    public static function provideValidCoordinates()
     {
         yield 'coordinates: 4, 5, 3, 3' => [
             [
