@@ -1,12 +1,9 @@
 <?php
 
-namespace App\Domain\Pieces;
+namespace App\Domain\Entity\Pieces;
 
-use App\Domain\Enums\PieceName;
-
-class Pawn extends AbstractPiece
+class King extends AbstractPiece
 {
-    protected PieceName $name = PieceName::PAWN;
 
     public function isValidMovement(int $yFrom, int $xFrom, int $yTo, int $xTo)
     {

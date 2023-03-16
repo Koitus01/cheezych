@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Domain;
+namespace App\Domain\Entity;
 
 use App\Domain\Config\BoardConfig;
-use App\Domain\Pieces\AbstractPiece;
+use App\Domain\Entity\Pieces\AbstractPiece;
 
 class Square
 {

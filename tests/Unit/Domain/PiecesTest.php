@@ -2,9 +2,9 @@
 
 namespace App\Tests\Unit\Domain;
 
-use App\Domain\Enums\Side;
+use App\Domain\Entity\Pieces\Pawn;
 use App\Domain\Enums\PieceName;
-use App\Domain\Pieces\Pawn;
+use App\Domain\Enums\Side;
 use PHPUnit\Framework\TestCase;
 
 class PiecesTest extends TestCase

@@ -2,8 +2,8 @@
 
 namespace App\Tests\Unit\Domain;
 
+use App\Domain\Entity\Player;
 use App\Domain\Enums\Side;
-use App\Domain\Player;
 use PHPUnit\Framework\TestCase;
 
 class PlayerTest extends TestCase

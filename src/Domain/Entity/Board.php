@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Domain;
+namespace App\Domain\Entity;
 
 use App\Domain\Config\BoardConfig;
+use App\Domain\Entity\Pieces\Bishop;
+use App\Domain\Entity\Pieces\King;
+use App\Domain\Entity\Pieces\Knight;
+use App\Domain\Entity\Pieces\Pawn;
+use App\Domain\Entity\Pieces\Queen;
+use App\Domain\Entity\Pieces\Rook;
 use App\Domain\Enums\Side;
 use App\Domain\Exceptions\UnknownXCoordinateException;
 use App\Domain\Exceptions\UnknownYCoordinateException;
-use App\Domain\Pieces\Bishop;
-use App\Domain\Pieces\King;
-use App\Domain\Pieces\Knight;
-use App\Domain\Pieces\Pawn;
-use App\Domain\Pieces\Queen;
-use App\Domain\Pieces\Rook;
 use Exception;
 
 class Board

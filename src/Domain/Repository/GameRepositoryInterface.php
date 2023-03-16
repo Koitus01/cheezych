@@ -2,7 +2,7 @@
 
 namespace App\Domain\Repository;
 
-use App\Domain\Game;
+use App\Domain\Entity\Game;
 
 interface GameRepositoryInterface
 {

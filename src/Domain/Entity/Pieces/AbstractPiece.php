@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Domain\Pieces;
+namespace App\Domain\Entity\Pieces;
 
-use App\Domain\Enums\Side;
 use App\Domain\Enums\PieceName;
+use App\Domain\Enums\Side;
 
 abstract class AbstractPiece
 {

@@ -2,17 +2,17 @@
 
 namespace App\Tests\Unit\Domain;
 
-use App\Domain\Board;
 use App\Domain\Config\BoardConfig;
+use App\Domain\Entity\Board;
+use App\Domain\Entity\Pieces\Bishop;
+use App\Domain\Entity\Pieces\King;
+use App\Domain\Entity\Pieces\Knight;
+use App\Domain\Entity\Pieces\Queen;
+use App\Domain\Entity\Pieces\Rook;
+use App\Domain\Entity\Square;
 use App\Domain\Enums\Side;
 use App\Domain\Exceptions\UnknownXCoordinateException;
 use App\Domain\Exceptions\UnknownYCoordinateException;
-use App\Domain\Pieces\Bishop;
-use App\Domain\Pieces\King;
-use App\Domain\Pieces\Knight;
-use App\Domain\Pieces\Queen;
-use App\Domain\Pieces\Rook;
-use App\Domain\Square;
 use PHPUnit\Framework\TestCase;
 
 class BoardTest extends TestCase

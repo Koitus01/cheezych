@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domain\Pieces;
+namespace App\Domain\Entity\Pieces;
 
-class Knight extends AbstractPiece
+class Queen extends AbstractPiece
 {
 
     public function isValidMovement(int $yFrom, int $xFrom, int $yTo, int $xTo)

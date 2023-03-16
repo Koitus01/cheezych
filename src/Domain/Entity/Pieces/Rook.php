@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Pieces;
+namespace App\Domain\Entity\Pieces;
 
 class Rook extends AbstractPiece
 {

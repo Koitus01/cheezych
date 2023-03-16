@@ -3,10 +3,8 @@
 namespace App\Application\UseCase;
 
 use App\Application\DTO\CoordinatesDTO;
-use App\Domain\Game;
-use App\Domain\Pieces\AbstractPiece;
+use App\Domain\Entity\Square;
 use App\Domain\Repository\GameRepositoryInterface;
-use App\Domain\Square;
 
 class MovePiece
 {

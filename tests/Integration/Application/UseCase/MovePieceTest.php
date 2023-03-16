@@ -4,9 +4,9 @@ namespace App\Tests\Integration\Application\UseCase;
 
 use App\Application\DTO\CoordinatesDTO;
 use App\Application\UseCase\MovePiece;
-use App\Domain\Board;
+use App\Domain\Entity\Board;
+use App\Domain\Entity\Game;
 use App\Domain\Enums\GameStatus;
-use App\Domain\Game;
 use App\Infrastructure\Repository\GameRepository;
 use PHPUnit\Framework\TestCase;
 

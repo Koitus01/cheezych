@@ -2,9 +2,9 @@
 
 namespace App\Tests\Unit\Domain;
 
+use App\Domain\Entity\Pieces\Pawn;
+use App\Domain\Entity\Square;
 use App\Domain\Enums\Side;
-use App\Domain\Pieces\Pawn;
-use App\Domain\Square;
 use PHPUnit\Framework\TestCase;
 
 class SquareTest extends TestCase

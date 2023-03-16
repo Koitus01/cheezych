@@ -2,13 +2,13 @@
 
 namespace App\Tests\Unit\Domain;
 
-use App\Domain\Board;
+use App\Domain\Entity\Board;
+use App\Domain\Entity\Game;
+use App\Domain\Entity\Player;
 use App\Domain\Enums\GameResult;
 use App\Domain\Enums\GameStatus;
 use App\Domain\Enums\Side;
 use App\Domain\Exceptions\PlayersHaveSameSideException;
-use App\Domain\Game;
-use App\Domain\Player;
 use PHPUnit\Framework\TestCase;
 
 class GameTest extends TestCase

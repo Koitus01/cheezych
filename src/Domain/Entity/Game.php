@@ -1,13 +1,10 @@
 <?php
 
-namespace App\Domain;
+namespace App\Domain\Entity;
 
 use App\Domain\Enums\GameResult;
 use App\Domain\Enums\GameStatus;
 use App\Domain\Exceptions\GameAlreadyFinishedException;
-use App\Domain\Exceptions\NoPlayersInGameException;
-use App\Domain\Exceptions\NotYourGameException;
-use App\Domain\Exceptions\PlayerIsAlreadyInTurnException;
 use App\Domain\Exceptions\PlayersHaveSameSideException;
 
 class Game
