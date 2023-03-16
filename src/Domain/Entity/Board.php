@@ -23,7 +23,8 @@ class Board
     private array $squares = [];
 
     /**
-     * @throws Exception
+     * @throws UnknownYCoordinateException
+     * @throws UnknownXCoordinateException
      */
     public function getSquare(int $y, int $x): Square
     {

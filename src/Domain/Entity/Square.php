@@ -15,15 +15,10 @@ class Square
      * @param int $x
      * @param int $y
      */
-    public function __construct(int $x, int $y)
+    public function __construct(int $y, int $x)
     {
-        if ($x < BoardConfig::MIN_COORDINATE || $x < BoardConfig::MAX_COORDINATE) {
-        }
-
-        if ($y < BoardConfig::MIN_COORDINATE || $y < BoardConfig::MAX_COORDINATE) {
-        }
-        $this->x = $x;
         $this->y = $y;
+        $this->x = $x;
     }
 
     public function setPiece(?AbstractPiece $piece): static

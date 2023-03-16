@@ -10,7 +10,7 @@ class Pawn extends AbstractPiece
 
     public function isValidMovement(int $yFrom, int $xFrom, int $yTo, int $xTo): bool
     {
-        #the pawn can only move forward
+        #can only move forward
         if ($xFrom !== $xTo) {
             return false;
         }
@@ -19,6 +19,7 @@ class Pawn extends AbstractPiece
             return false;
         }
 
+        #cannot move backward
         if ($yFrom > $yTo) {
             return false;
         }

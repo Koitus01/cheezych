@@ -22,7 +22,22 @@ class MovePieceTest extends TestCase
         $repositoryMock = $this->createStub(GameRepository::class);
         $repositoryMock->method('findById')->willReturn($gameModel);
         $mp = new MovePiece($repositoryMock);
-        $result = $mp->execute(1, new CoordinatesDTO(1, 2), new CoordinatesDTO(2, 2));
+        $result = $mp->execute(1, new CoordinatesDTO(2, 1), new CoordinatesDTO(3, 1));
+
+        $this->assertTrue($result);
+    }
+
+    public function testExecuteWithUnknownCoordinatesWillFail()
+    {
+        $gameModel = new Game(1);
+        $boardModel = new Board();
+        $boardModel->reset();
+        $gameModel->setStatus(GameStatus::ACTIVE);
+        $gameModel->setBoard($boardModel);
+        $repositoryMock = $this->createStub(GameRepository::class);
+        $repositoryMock->method('findById')->willReturn($gameModel);
+        $mp = new MovePiece($repositoryMock);
+        $result = $mp->execute(1, new CoordinatesDTO(25, 1), new CoordinatesDTO(3, 1));
 
         $this->assertTrue($result);
     }

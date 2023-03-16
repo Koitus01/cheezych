@@ -11,4 +11,10 @@ class GameRepository implements GameRepositoryInterface
     {
         // TODO: Implement findById() method.
     }
+
+    public function save(Game $game)
+    {
+        return $game;
+        // TODO: Implement save() method.
+    }
 }
