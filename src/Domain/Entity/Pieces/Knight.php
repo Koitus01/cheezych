@@ -25,9 +25,4 @@ class Knight extends AbstractPiece
 
         return true;
     }
-
-    public function isValidCapture(int $yFrom, int $xFrom, int $yTo, int $xTo): bool
-    {
-        // TODO: Implement isValidCapture() method.
-    }
 }

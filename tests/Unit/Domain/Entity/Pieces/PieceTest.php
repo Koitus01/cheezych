@@ -38,12 +38,4 @@ class PieceTest extends TestCase
         $p = new Pawn(Side::WHITE);
         $this->assertFalse($p->isValidMovement(9, -1, 3, 1));
     }
-
-/*    public function testMovementPattern(): void
-    {
-        $pawn = new Pawn(Side::WHITE);
-        $movementPattern = $pawn->getMovementPattern();
-
-
-    }*/
 }

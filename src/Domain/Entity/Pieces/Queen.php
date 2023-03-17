@@ -25,9 +25,4 @@ class Queen extends AbstractPiece
 
         return false;
     }
-
-    public function isValidCapture(int $yFrom, int $xFrom, int $yTo, int $xTo): bool
-    {
-        // TODO: Implement isValidCapture() method.
-    }
 }

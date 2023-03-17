@@ -29,6 +29,10 @@ class Pawn extends AbstractPiece
 
     public function isValidCapture(int $yFrom, int $xFrom, int $yTo, int $xTo): bool
     {
-        // TODO: Implement isValidCapture() method.
+        if ($yTo - $yFrom === 1 && abs($xFrom - $xTo) === 1) {
+            return true;
+        }
+
+        return false;
     }
 }
