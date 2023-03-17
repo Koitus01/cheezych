@@ -8,7 +8,7 @@ use App\Domain\Enums\Side;
 abstract class AbstractPiece
 {
     private readonly Side $side;
-    protected PieceName $name;
+    protected PieceName $name = PieceName::KNIGHT;
 
     /**
      * @param Side $side
@@ -41,6 +41,14 @@ abstract class AbstractPiece
         return $this->side === Side::BLACK;
     }
 
+    /**
+     * TODO: pass DTO?
+     * @param int $yFrom
+     * @param int $xFrom
+     * @param int $yTo
+     * @param int $xTo
+     * @return bool
+     */
     abstract public function isValidMovement(int $yFrom, int $xFrom, int $yTo, int $xTo): bool;
 
     /**

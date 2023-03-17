@@ -3,6 +3,7 @@
 namespace App\Tests\Unit\Domain\Entity\Pieces;
 
 use App\Domain\Entity\Pieces\Knight;
+use App\Domain\Enums\PieceName;
 use PHPUnit\Framework\TestCase;
 
 class KnightTest extends TestCase
@@ -48,6 +49,12 @@ class KnightTest extends TestCase
         $k = new Knight();
         $result = $k->isValidMovement(1, 2, 3, 4);
         $this->assertFalse($result);
+    }
+
+    public function testGetName()
+    {
+        $k = new Knight();
+        $this->assertEquals(PieceName::KNIGHT, $k->getName());
     }
 
     public static function provideValidCoordinates()

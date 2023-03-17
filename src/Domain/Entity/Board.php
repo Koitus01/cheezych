@@ -17,7 +17,7 @@ use Exception;
 class Board
 {
     /**
-     * TODO: подумать, чтобы это был не массив
+     * TODO: make it not array??
      * @var Square[] Spot
      */
     private array $squares = [];

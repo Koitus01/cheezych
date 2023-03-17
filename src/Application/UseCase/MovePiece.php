@@ -5,6 +5,7 @@ namespace App\Application\UseCase;
 use App\Application\DTO\CoordinatesDTO;
 use App\Domain\Entity\Pieces\AbstractPiece;
 use App\Domain\Entity\Square;
+use App\Domain\Enums\PieceName;
 use App\Domain\Exceptions\UnknownXCoordinateException;
 use App\Domain\Exceptions\UnknownYCoordinateException;
 use App\Domain\Repository\GameRepositoryInterface;
@@ -17,6 +18,10 @@ class MovePiece
     private ?AbstractPiece $pieceTo;
     private Square $squareFrom;
     private Square $squareTo;
+    /**
+     * @var Square[]
+     */
+    private array $squares;
 
     public function __construct(GameRepositoryInterface $gameRepository)
     {
@@ -36,6 +41,7 @@ class MovePiece
 
         $this->squareFrom = $board->getSquare($moveFrom->y, $moveFrom->x);
         $this->squareTo = $board->getSquare($moveTo->y, $moveTo->x);
+        $this->squares = $board->getSquares();
         $this->pieceFrom = $this->squareFrom->getPiece();
         $this->pieceTo = $this->squareTo->getPiece();
 
@@ -71,34 +77,34 @@ class MovePiece
 
     private function validateMovement(): bool
     {
-        if (!$this->pieceFrom->isValidMovement(
+        return $this->pieceFrom->isValidMovement(
             $this->squareFrom->y,
             $this->squareFrom->x,
             $this->squareTo->y,
             $this->squareTo->x
-        )) {
-            return false;
-        }
-
-        return true;
+        );
     }
 
     private function validateCapture(): bool
     {
-        if (!$this->pieceFrom->isValidCapture(
+        return $this->pieceFrom->isValidCapture(
             $this->squareFrom->y,
             $this->squareFrom->x,
             $this->squareTo->y,
             $this->squareTo->x
-        )) {
-            return false;
-        }
-
-        return true;
+        );
     }
 
     private function validateInterfering(): bool
     {
+        #no validate for knight, because he can step over pieces
+        if ($this->pieceFrom->getName() === PieceName::KNIGHT) {
+            return true;
+        }
 
+        if (1 + 1) {
+            return false;
+        }
+        return true;
     }
 }
