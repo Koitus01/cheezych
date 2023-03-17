@@ -9,7 +9,7 @@ use App\Domain\Enums\Side;
 abstract class AbstractPiece
 {
     protected readonly Side $side;
-    protected PieceName $name = PieceName::KNIGHT;
+    protected PieceName $name;
 
     /**
      * @param Side $side

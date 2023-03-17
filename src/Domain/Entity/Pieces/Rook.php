@@ -3,9 +3,11 @@
 namespace App\Domain\Entity\Pieces;
 
 use App\Domain\DTO\MovementCoordinatesDTO;
+use App\Domain\Enums\PieceName;
 
 class Rook extends AbstractPiece
 {
+    protected PieceName $name = PieceName::ROOK;
 
     public function isValidMovement(MovementCoordinatesDTO $coordinates): bool
     {

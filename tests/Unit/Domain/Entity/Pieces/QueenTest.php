@@ -4,6 +4,7 @@ namespace App\Tests\Unit\Domain\Entity\Pieces;
 
 use App\Domain\DTO\MovementCoordinatesDTO;
 use App\Domain\Entity\Pieces\Queen;
+use App\Domain\Enums\PieceName;
 use PHPUnit\Framework\TestCase;
 
 class QueenTest extends TestCase
@@ -30,6 +31,12 @@ class QueenTest extends TestCase
         $coordinates = new MovementCoordinatesDTO(2, 1, 3, 3);
         $result = $q->isValidMovement($coordinates);
         $this->assertFalse($result);
+    }
+
+    public function testGetName()
+    {
+        $q = new Queen();
+        $this->assertEquals(PieceName::QUEEN, $q->getName());
     }
 
     public static function provideValidMovements()

@@ -4,6 +4,7 @@ namespace App\Tests\Unit\Domain\Entity\Pieces;
 
 use App\Domain\DTO\MovementCoordinatesDTO;
 use App\Domain\Entity\Pieces\Bishop;
+use App\Domain\Enums\PieceName;
 use Generator;
 use PHPUnit\Framework\TestCase;
 
@@ -47,6 +48,12 @@ class BishopTest extends TestCase
         );
         $result = $b->isValidMovement($coordinates);
         $this->assertFalse($result);
+    }
+
+    public function testGetName()
+    {
+        $b = new Bishop();
+        $this->assertEquals(PieceName::BISHOP, $b->getName());
     }
 
     public static function provideNotDiagonallyCoordinates(): Generator

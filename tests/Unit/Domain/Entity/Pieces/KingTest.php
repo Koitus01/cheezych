@@ -4,6 +4,7 @@ namespace App\Tests\Unit\Domain\Entity\Pieces;
 
 use App\Domain\DTO\MovementCoordinatesDTO;
 use App\Domain\Entity\Pieces\King;
+use App\Domain\Enums\PieceName;
 use PHPUnit\Framework\TestCase;
 
 class KingTest extends TestCase
@@ -38,5 +39,11 @@ class KingTest extends TestCase
         $coordinates = new MovementCoordinatesDTO(1, 1, 3, 3);
         $result = $k->isValidMovement($coordinates);
         $this->assertFalse($result);
+    }
+
+    public function testGetName()
+    {
+        $k = new King();
+        $this->assertEquals(PieceName::KING, $k->getName());
     }
 }

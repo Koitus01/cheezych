@@ -4,6 +4,7 @@ namespace App\Tests\Unit\Domain\Entity\Pieces;
 
 use App\Domain\DTO\MovementCoordinatesDTO;
 use App\Domain\Entity\Pieces\Rook;
+use App\Domain\Enums\PieceName;
 use PHPUnit\Framework\TestCase;
 
 class RookTest extends TestCase
@@ -38,6 +39,12 @@ class RookTest extends TestCase
         $coordinates = new MovementCoordinatesDTO(2, 1, 3, 3);
         $result = $r->isValidMovement($coordinates);
         $this->assertFalse($result);
+    }
+
+    public function testGetName()
+    {
+        $r = new Rook();
+        $this->assertEquals(PieceName::ROOK, $r->getName());
     }
 
     public function provideValidMovements()
