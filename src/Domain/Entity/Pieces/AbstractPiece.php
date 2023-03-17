@@ -2,12 +2,13 @@
 
 namespace App\Domain\Entity\Pieces;
 
+use App\Domain\DTO\MovementCoordinatesDTO;
 use App\Domain\Enums\PieceName;
 use App\Domain\Enums\Side;
 
 abstract class AbstractPiece
 {
-    private readonly Side $side;
+    protected readonly Side $side;
     protected PieceName $name = PieceName::KNIGHT;
 
     /**
@@ -43,24 +44,18 @@ abstract class AbstractPiece
 
     /**
      * TODO: pass DTO?
-     * @param int $yFrom
-     * @param int $xFrom
-     * @param int $yTo
-     * @param int $xTo
+     * @param MovementCoordinatesDTO $coordinates
      * @return bool
      */
-    abstract public function isValidMovement(int $yFrom, int $xFrom, int $yTo, int $xTo): bool;
+    abstract public function isValidMovement(MovementCoordinatesDTO $coordinates): bool;
 
     /**
      * The pawn has different movement and capture patterns
-     * @param int $yFrom
-     * @param int $xFrom
-     * @param int $yTo
-     * @param int $xTo
+     * @param MovementCoordinatesDTO $coordinates
      * @return bool
      */
-    public function isValidCapture(int $yFrom, int $xFrom, int $yTo, int $xTo): bool
+    public function isValidCapture(MovementCoordinatesDTO $coordinates): bool
     {
-        return $this->isValidMovement($yFrom, $xFrom, $yTo, $xTo);
+        return $this->isValidMovement($coordinates);
     }
 }

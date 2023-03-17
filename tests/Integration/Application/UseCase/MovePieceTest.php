@@ -20,7 +20,7 @@ class MovePieceTest extends TestCase
         $gameModel = $this->createValidCleanGame();
         $repositoryMock = $this->createGameRepositoryMock($gameModel);
         $mp = new MovePiece($repositoryMock);
-        $result = $mp->execute(1, new CoordinatesDTO(2, 1), new CoordinatesDTO(3, 1));
+        $result = $mp->execute(1, new CoordinatesDTO(1, 2), new CoordinatesDTO(1, 3));
 
         $this->assertTrue($result);
     }
@@ -32,7 +32,7 @@ class MovePieceTest extends TestCase
         $gameModel = $this->createValidCleanGame();
         $repositoryMock = $this->createGameRepositoryMock($gameModel);
         $mp = new MovePiece($repositoryMock);
-        $mp->execute(1, new CoordinatesDTO(25, 1), new CoordinatesDTO(3, 1));
+        $mp->execute(1, new CoordinatesDTO(1, 25), new CoordinatesDTO(3, 1));
     }
 
     public function testExecuteWithNoMovementReturnFalse()

@@ -2,20 +2,22 @@
 
 namespace App\Domain\Entity\Pieces;
 
+use App\Domain\DTO\MovementCoordinatesDTO;
+
 class Bishop extends AbstractPiece
 {
 
-    public function isValidMovement(int $yFrom, int $xFrom, int $yTo, int $xTo): bool
+    public function isValidMovement(MovementCoordinatesDTO $coordinates): bool
     {
-        if ($yFrom === $yTo) {
+        if ($coordinates->yFrom === $coordinates->yTo) {
             return false;
         }
 
-        if ($xFrom === $xTo) {
+        if ($coordinates->xFrom === $coordinates->xTo) {
             return false;
         }
 
-        if (abs($yFrom - $yTo) !== abs($xFrom - $xTo)) {
+        if (abs($coordinates->yFrom - $coordinates->yTo) !== abs($coordinates->xFrom - $coordinates->xTo)) {
             return false;
         }
 

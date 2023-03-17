@@ -2,6 +2,7 @@
 
 namespace App\Tests\Unit\Domain\Entity\Pieces;
 
+use App\Domain\DTO\MovementCoordinatesDTO;
 use App\Domain\Entity\Pieces\Knight;
 use App\Domain\Enums\PieceName;
 use PHPUnit\Framework\TestCase;
@@ -14,40 +15,45 @@ class KnightTest extends TestCase
     public function testValidMovements($coordinates)
     {
         $k = new Knight();
-        $result = $k->isValidMovement(
-            $coordinates['yFrom'],
+        $coordinates = new MovementCoordinatesDTO(
             $coordinates['xFrom'],
-            $coordinates['yTo'],
-            $coordinates['xTo']
+            $coordinates['yFrom'],
+            $coordinates['xTo'],
+            $coordinates['yTo']
         );
+        $result = $k->isValidMovement($coordinates);
         $this->assertTrue($result);
     }
 
     public function testMoveVerticallyIsInvalid()
     {
         $k = new Knight();
-        $result = $k->isValidMovement(1, 2, 2, 2);
+        $coordinates = new MovementCoordinatesDTO(2, 1, 2, 2);
+        $result = $k->isValidMovement($coordinates);
         $this->assertFalse($result);
     }
 
     public function testMoveHorizontallyIsInvalid()
     {
         $k = new Knight();
-        $result = $k->isValidMovement(1, 2, 1, 3);
+        $coordinates = new MovementCoordinatesDTO(2, 1, 3, 1);
+        $result = $k->isValidMovement($coordinates);
         $this->assertFalse($result);
     }
 
     public function testMoveDiagonallyIsInvalid()
     {
         $k = new Knight();
-        $result = $k->isValidMovement(1, 2, 2, 3);
+        $coordinates = new MovementCoordinatesDTO(1, 1, 2, 2);
+        $result = $k->isValidMovement($coordinates);
         $this->assertFalse($result);
     }
 
     public function testMoveDiagonallyAcrossTwoSquaresIsInvalid()
     {
         $k = new Knight();
-        $result = $k->isValidMovement(1, 2, 3, 4);
+        $coordinates = new MovementCoordinatesDTO(1, 1, 3, 3);
+        $result = $k->isValidMovement($coordinates);
         $this->assertFalse($result);
     }
 

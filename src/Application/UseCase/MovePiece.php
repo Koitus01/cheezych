@@ -3,6 +3,7 @@
 namespace App\Application\UseCase;
 
 use App\Application\DTO\CoordinatesDTO;
+use App\Domain\DTO\MovementCoordinatesDTO;
 use App\Domain\Entity\Pieces\AbstractPiece;
 use App\Domain\Entity\Square;
 use App\Domain\Enums\PieceName;
@@ -22,6 +23,7 @@ class MovePiece
      * @var Square[]
      */
     private array $squares;
+    private MovementCoordinatesDTO $coordinates;
 
     public function __construct(GameRepositoryInterface $gameRepository)
     {
@@ -44,6 +46,12 @@ class MovePiece
         $this->squares = $board->getSquares();
         $this->pieceFrom = $this->squareFrom->getPiece();
         $this->pieceTo = $this->squareTo->getPiece();
+        $this->coordinates = new MovementCoordinatesDTO(
+            $this->squareFrom->x,
+            $this->squareFrom->y,
+            $this->squareTo->x,
+            $this->squareTo->y
+        );
 
         if ($moveFrom->y === $moveTo->y && $moveFrom->x === $moveTo->x) {
             return false;
@@ -77,26 +85,17 @@ class MovePiece
 
     private function validateMovement(): bool
     {
-        return $this->pieceFrom->isValidMovement(
-            $this->squareFrom->y,
-            $this->squareFrom->x,
-            $this->squareTo->y,
-            $this->squareTo->x
-        );
+        return $this->pieceFrom->isValidMovement($this->coordinates);
     }
 
     private function validateCapture(): bool
     {
-        return $this->pieceFrom->isValidCapture(
-            $this->squareFrom->y,
-            $this->squareFrom->x,
-            $this->squareTo->y,
-            $this->squareTo->x
-        );
+        return $this->pieceFrom->isValidCapture($this->coordinates);
     }
 
     private function validateInterfering(): bool
     {
+        return true;
         #no validate for knight, because he can step over pieces
         if ($this->pieceFrom->getName() === PieceName::KNIGHT) {
             return true;

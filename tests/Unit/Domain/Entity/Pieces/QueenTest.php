@@ -2,6 +2,7 @@
 
 namespace App\Tests\Unit\Domain\Entity\Pieces;
 
+use App\Domain\DTO\MovementCoordinatesDTO;
 use App\Domain\Entity\Pieces\Queen;
 use PHPUnit\Framework\TestCase;
 
@@ -10,55 +11,62 @@ class QueenTest extends TestCase
     /**
      * @dataProvider provideValidMovements
      */
-    public function testValidMovements()
+    public function testValidMovements($coordinates)
     {
         $q = new Queen();
-        $result = $q->isValidMovement(1, 5, 5, 5);
+        $coordinates = new MovementCoordinatesDTO(
+            $coordinates['xFrom'],
+            $coordinates['yFrom'],
+            $coordinates['xTo'],
+            $coordinates['yTo']
+        );
+        $result = $q->isValidMovement($coordinates);
         $this->assertTrue($result);
     }
 
     public function testKnightMovementIsInvalid()
     {
         $q = new Queen();
-        $result = $q->isValidMovement(1, 5, 3, 6);
+        $coordinates = new MovementCoordinatesDTO(2, 1, 3, 3);
+        $result = $q->isValidMovement($coordinates);
         $this->assertFalse($result);
     }
 
     public static function provideValidMovements()
     {
-        yield 'coordinates: 1, 5, 1, 8' => [
+        yield 'coordinates: 5, 1, 8, 1' => [
             [
-                'yFrom' => 1,
                 'xFrom' => 5,
-                'yTo' => 1,
-                'xTo' => 8
-            ]
-        ];
-
-        yield 'coordinates: 1, 8, 4, 6' => [
-            [
                 'yFrom' => 1,
-                'xFrom' => 8,
-                'yTo' => 4,
-                'xTo' => 6
+                'xTo' => 8,
+                'yTo' => 1,
             ]
         ];
 
-        yield 'coordinates: 4, 6, 8, 6' => [
+        yield 'coordinates: 6, 4, 6, 8' => [
             [
+                'xFrom' => 6,
                 'yFrom' => 4,
-                'xFrom' => 6,
+                'xTo' => 6,
                 'yTo' => 8,
-                'xTo' => 6
             ]
         ];
 
-        yield 'coordinates: 8, 6, 4, 2' => [
+        yield 'coordinates: 6, 8, 2, 4' => [
             [
-                'yFrom' => 8,
                 'xFrom' => 6,
+                'yFrom' => 8,
+                'xTo' => 2,
                 'yTo' => 4,
-                'xTo' => 2
+            ]
+        ];
+
+        yield 'coordinates: 2, 4, 3, 3' => [
+            [
+                'xFrom' => 2,
+                'yFrom' => 4,
+                'xTo' => 3,
+                'yTo' => 3,
             ]
         ];
     }

@@ -32,10 +32,4 @@ class PieceTest extends TestCase
         $p = new Pawn(Side::WHITE);
         $this->assertEquals(PieceName::PAWN, $p->getName());
     }
-
-    public function testOutOfBoardCoordinatesIsNotValid()
-    {
-        $p = new Pawn(Side::WHITE);
-        $this->assertFalse($p->isValidMovement(9, -1, 3, 1));
-    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Tests\Unit\Domain\Entity\Pieces;
 
+use App\Domain\DTO\MovementCoordinatesDTO;
 use App\Domain\Entity\Pieces\Bishop;
 use Generator;
 use PHPUnit\Framework\TestCase;
@@ -11,21 +12,24 @@ class BishopTest extends TestCase
     public function testIsValidMovement()
     {
         $b = new Bishop();
-        $result = $b->isValidMovement(1, 2, 2, 3);
+        $coordinates = new MovementCoordinatesDTO(2, 1, 3, 2);
+        $result = $b->isValidMovement($coordinates);
         $this->assertTrue($result);
     }
 
     public function testCannotMoveHorizontally()
     {
         $b = new Bishop();
-        $result = $b->isValidMovement(1, 1, 1, 3);
+        $coordinates = new MovementCoordinatesDTO(1, 1, 3, 1);
+        $result = $b->isValidMovement($coordinates);
         $this->assertFalse($result);
     }
 
     public function testCannotMoveVertically()
     {
         $b = new Bishop();
-        $result = $b->isValidMovement(1, 1, 3, 1);
+        $coordinates = new MovementCoordinatesDTO(1, 1, 1, 3);
+        $result = $b->isValidMovement($coordinates);
         $this->assertFalse($result);
     }
 
@@ -35,68 +39,70 @@ class BishopTest extends TestCase
     public function testCanOnlyMoveDiagonally($coordinates)
     {
         $b = new Bishop();
-        $result = $b->isValidMovement(
-            $coordinates['yFrom'],
+        $coordinates = new MovementCoordinatesDTO(
             $coordinates['xFrom'],
-            $coordinates['yTo'],
-            $coordinates['xTo']
+            $coordinates['yFrom'],
+            $coordinates['xTo'],
+            $coordinates['yTo']
         );
+        $result = $b->isValidMovement($coordinates);
         $this->assertFalse($result);
     }
 
     public static function provideNotDiagonallyCoordinates(): Generator
     {
-        yield 'coordinates: 1, 2, 1, 25' => [
-             [
-                'yFrom' => 1,
+        yield 'coordinates: 2, 1, 25, 1' => [
+            [
                 'xFrom' => 2,
+                'yFrom' => 1,
+                'xTo' => 25,
                 'yTo' => 1,
-                'xTo' => 25
+
             ]
         ];
 
         yield 'coordinates: 1, 2, 1, 7' => [
             [
-                'yFrom' => 1,
-                'xFrom' => 2,
-                'yTo' => 1,
-                'xTo' => 7
-            ]
-        ];
-
-        yield 'coordinates: 1, 2, 7, 5' => [
-            [
-                'yFrom' => 1,
-                'xFrom' => 2,
+                'xFrom' => 1,
+                'yFrom' => 2,
+                'xTo' => 1,
                 'yTo' => 7,
-                'xTo' => 5
             ]
         ];
 
-        yield 'coordinates: 1, 2, 4, 3' => [
+        yield 'coordinates: 2, 1, 5, 7' => [
             [
-                'yFrom' => 1,
                 'xFrom' => 2,
+                'yFrom' => 1,
+                'xTo' => 5,
+                'yTo' => 7,
+            ]
+        ];
+
+        yield 'coordinates: 2, 1, 3, 4' => [
+            [
+                'xFrom' => 2,
+                'yFrom' => 1,
+                'xTo' => 3,
                 'yTo' => 4,
-                'xTo' => 3
             ]
         ];
 
-        yield 'coordinates: 5, 5, 3, 2' => [
+        yield 'coordinates: 5, 5, 2, 3' => [
             [
-                'yFrom' => 5,
                 'xFrom' => 5,
+                'yFrom' => 5,
+                'xTo' => 2,
                 'yTo' => 3,
-                'xTo' => 2
             ]
         ];
 
-        yield 'coordinates: 8, 8, 8, 1' => [
+        yield 'coordinates: 8, 8, 1, 8' => [
             [
-                'yFrom' => 8,
                 'xFrom' => 8,
+                'yFrom' => 8,
+                'xTo' => 1,
                 'yTo' => 8,
-                'xTo' => 1
             ]
         ];
     }
