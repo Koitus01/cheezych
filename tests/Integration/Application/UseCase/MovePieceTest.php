@@ -88,12 +88,16 @@ class MovePieceTest extends TestCase
     /**
      * @dataProvider provideInterferingMoves
      */
-    public function testExecuteInterferingMovesReturnFalse()
+    public function testExecuteInterferingMovesReturnFalse($coordinates)
     {
         $gameModel = $this->createValidCleanGame();
         $repositoryMock = $this->createGameRepositoryMock($gameModel);
         $mp = new MovePiece($repositoryMock);
-        $result = $mp->execute(1, new CoordinatesDTO(1, 1), new CoordinatesDTO(3, 1));
+        $result = $mp->execute(
+            1,
+            new CoordinatesDTO($coordinates['xFrom'], $coordinates['yFrom']),
+            new CoordinatesDTO($coordinates['xTo'], $coordinates['yTo'])
+        );
 
         $this->assertFalse($result);
     }
@@ -117,12 +121,30 @@ class MovePieceTest extends TestCase
 
     public function provideInterferingMoves(): Generator
     {
-        yield 'coordinates: 1, 2, 1, 25' => [
+        yield 'coordinates: 1, 1, 1, 6' => [
             [
+                'xFrom' => 1,
                 'yFrom' => 1,
-                'xFrom' => 2,
-                'yTo' => 1,
-                'xTo' => 25
+                'xTo' => 1,
+                'yTo' => 6,
+            ]
+        ];
+
+        yield 'coordinates: 1, 8, 1, 4' => [
+            [
+                'xFrom' => 1,
+                'yFrom' => 8,
+                'xTo' => 1,
+                'yTo' => 4,
+            ]
+        ];
+
+        yield 'coordinates: 1, 8, 1, 4' => [
+            [
+                'xFrom' => 1,
+                'yFrom' => 8,
+                'xTo' => 1,
+                'yTo' => 4,
             ]
         ];
     }

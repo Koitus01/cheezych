@@ -23,7 +23,7 @@ class MovePiece
      * @var Square[]
      */
     private array $squares;
-    private MovementCoordinatesDTO $coordinates;
+    private MovementCoordinatesDTO $movementCoordinatesDTO;
 
     public function __construct(GameRepositoryInterface $gameRepository)
     {
@@ -46,7 +46,7 @@ class MovePiece
         $this->squares = $board->getSquares();
         $this->pieceFrom = $this->squareFrom->getPiece();
         $this->pieceTo = $this->squareTo->getPiece();
-        $this->coordinates = new MovementCoordinatesDTO(
+        $this->movementCoordinatesDTO = new MovementCoordinatesDTO(
             $this->squareFrom->x,
             $this->squareFrom->y,
             $this->squareTo->x,
@@ -85,25 +85,52 @@ class MovePiece
 
     private function validateMovement(): bool
     {
-        return $this->pieceFrom->isValidMovement($this->coordinates);
+        return $this->pieceFrom->isValidMovement($this->movementCoordinatesDTO);
     }
 
     private function validateCapture(): bool
     {
-        return $this->pieceFrom->isValidCapture($this->coordinates);
+        return $this->pieceFrom->isValidCapture($this->movementCoordinatesDTO);
     }
 
     private function validateInterfering(): bool
     {
-        return true;
         #no validate for knight, because he can step over pieces
         if ($this->pieceFrom->getName() === PieceName::KNIGHT) {
             return true;
         }
 
-        if (1 + 1) {
-            return false;
+        $xDiff = abs($this->squareFrom->x - $this->squareTo->x);
+        $yDiff = abs($this->squareFrom->y - $this->squareTo->y);
+
+        #catch vertical move
+        if ($yDiff > 0 && $xDiff === 0) {
+            for ($i = $this->squareFrom->y + 1; $i <= $this->squareTo->y; $i++) {
+                if (isset($this->squares[$i][$this->squareFrom->x])) {
+                    return false;
+                }
+            }
+            for ($i = $this->squareTo->y + 1; $i <= $this->squareFrom->y; $i++) {
+                if (isset($this->squares[$i][$this->squareFrom->x])) {
+                    return false;
+                }
+            }
         }
+
+        #catch horizontal move
+        if ($xDiff > 0 && $yDiff === 0) {
+            for ($i = $this->squareFrom->x + 1; $i <= $this->squareTo->x; $i++) {
+                if (isset($this->squares[$this->squareFrom->y][$i])) {
+                    return false;
+                }
+            }
+            for ($i = $this->squareTo->x + 1; $i <= $this->squareFrom->x; $i++) {
+                if (isset($this->squares[$this->squareFrom->y][$i])) {
+                    return false;
+                }
+            }
+        }
+
         return true;
     }
 }
