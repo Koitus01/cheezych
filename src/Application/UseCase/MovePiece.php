@@ -25,6 +25,7 @@ class MovePiece
 
 
     /**
+     * TODO: move validate to another class??
      * @throws UnknownXCoordinateException
      * @throws UnknownYCoordinateException
      */
@@ -42,36 +43,62 @@ class MovePiece
             return false;
         }
 
-        if (!$this->validateMovement()) {
+        if (!$this->pieceFrom) {
             return false;
         }
 
-        #if ()
+        #if there is no piece on target square, we validate movement
+        if (!$this->pieceTo && !$this->validateMovement()) {
+            return false;
+        }
+
+        #if there is enemy piece on target square, we validate capture
+        if ($this->pieceTo && $this->pieceFrom->getSide() !== $this->pieceTo->getSide() && !$this->validateCapture()) {
+            return false;
+        }
+
+        #if there is allied piece on target square, we have no validate
+        if ($this->pieceFrom->getSide() === $this->pieceTo?->getSide()) {
+            return false;
+        }
+
+        if (!$this->validateInterfering()) {
+            return false;
+        }
 
         return true;
-
     }
 
     private function validateMovement(): bool
     {
-
-
-        #cannot put the piece to square with same color piece
-        if ($this->pieceFrom->side === $this->pieceTo->side) {
-            return false;
-        }
-
         if (!$this->pieceFrom->isValidMovement(
             $this->squareFrom->y,
             $this->squareFrom->x,
             $this->squareTo->y,
             $this->squareTo->x
-        )
-        ) {
+        )) {
             return false;
         }
 
         return true;
     }
 
+    private function validateCapture(): bool
+    {
+        if (!$this->pieceFrom->isValidCapture(
+            $this->squareFrom->y,
+            $this->squareFrom->x,
+            $this->squareTo->y,
+            $this->squareTo->x
+        )) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private function validateInterfering(): bool
+    {
+
+    }
 }

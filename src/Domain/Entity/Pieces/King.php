@@ -29,8 +29,8 @@ class King extends AbstractPiece
         // TODO: Implement getMovementPattern() method.
     }
 
-    public function getCapturePattern()
+    public function isValidCapture(int $yFrom, int $xFrom, int $yTo, int $xTo): bool
     {
-        // TODO: Implement getCapturePattern() method.
+        // TODO: Implement isValidCapture() method.
     }
 }

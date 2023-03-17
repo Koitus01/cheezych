@@ -12,7 +12,7 @@ class PieceTest extends TestCase
     public function testGetSide()
     {
         $p = new Pawn(Side::WHITE);
-        $this->assertEquals(Side::WHITE, $p->side);
+        $this->assertEquals(Side::WHITE, $p->getSide());
     }
 
     public function testIsWhite()

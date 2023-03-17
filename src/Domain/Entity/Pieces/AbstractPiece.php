@@ -8,7 +8,7 @@ use App\Domain\Enums\Side;
 
 abstract class AbstractPiece
 {
-    public readonly Side $side;
+    private readonly Side $side;
     protected PieceName $name;
 
     /**
@@ -24,6 +24,14 @@ abstract class AbstractPiece
         return $this->name;
     }
 
+    /**
+     * @return Side
+     */
+    public function getSide(): Side
+    {
+        return $this->side;
+    }
+
     public function isWhite(): bool
     {
         return $this->side === Side::WHITE;
@@ -35,5 +43,5 @@ abstract class AbstractPiece
     }
     abstract public function isValidMovement(int $yFrom, int $xFrom, int $yTo, int $xTo): bool;
 
-    abstract public function getCapturePattern();
+    abstract public function isValidCapture(int $yFrom, int $xFrom, int $yTo, int $xTo): bool;
 }

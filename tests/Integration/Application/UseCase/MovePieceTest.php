@@ -14,11 +14,7 @@ class MovePieceTest extends TestCase
 {
     public function testExecute()
     {
-        $gameModel = new Game(1);
-        $boardModel = new Board();
-        $boardModel->reset();
-        $gameModel->setStatus(GameStatus::ACTIVE);
-        $gameModel->setBoard($boardModel);
+        $gameModel = $this->createValidGame();
         $repositoryMock = $this->createStub(GameRepository::class);
         $repositoryMock->method('findById')->willReturn($gameModel);
         $mp = new MovePiece($repositoryMock);
@@ -29,16 +25,22 @@ class MovePieceTest extends TestCase
 
     public function testExecuteWithUnknownCoordinatesWillFail()
     {
-        $gameModel = new Game(1);
-        $boardModel = new Board();
-        $boardModel->reset();
-        $gameModel->setStatus(GameStatus::ACTIVE);
-        $gameModel->setBoard($boardModel);
+        $gameModel = $this->createValidGame();
         $repositoryMock = $this->createStub(GameRepository::class);
         $repositoryMock->method('findById')->willReturn($gameModel);
         $mp = new MovePiece($repositoryMock);
         $result = $mp->execute(1, new CoordinatesDTO(25, 1), new CoordinatesDTO(3, 1));
 
         $this->assertTrue($result);
+    }
+
+    private static function createValidGame(): Game
+    {
+        $gameModel = new Game(1);
+        $boardModel = new Board();
+        $boardModel->reset();
+        $gameModel->setStatus(GameStatus::ACTIVE);
+        $gameModel->setBoard($boardModel);
+        return $gameModel;
     }
 }
