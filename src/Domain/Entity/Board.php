@@ -26,13 +26,13 @@ class Board
      * @throws UnknownYCoordinateException
      * @throws UnknownXCoordinateException
      */
-    public function getSquare(int $y, int $x): Square
+    public function getSquare(int $x, int $y): Square
     {
-        if (!isset($this->squares[$y])) {
+        if (!isset($this->squares[$x])) {
             throw new UnknownYCoordinateException;
         }
 
-        if (!isset($this->squares[$y][$x])) {
+        if (!isset($this->squares[$x][$y])) {
             throw new UnknownXCoordinateException;
         }
 
@@ -48,97 +48,99 @@ class Board
     {
         $this->squares = [];
 
-        #создаем поля с белыми
-        $this->squares[BoardConfig::MIN_COORDINATE][1] = Square::create(
-            BoardConfig::MIN_COORDINATE,
+        #white pawns
+        $this->squares[1][BoardConfig::MIN_COORDINATE] = Square::create(
             1,
+            BoardConfig::MIN_COORDINATE,
             new Rook(Side::WHITE)
         );
-        $this->squares[BoardConfig::MIN_COORDINATE][2] = Square::create(
-            BoardConfig::MIN_COORDINATE,
+        $this->squares[2][BoardConfig::MIN_COORDINATE] = Square::create(
             2,
+            BoardConfig::MIN_COORDINATE,
             new Knight(Side::WHITE)
         );
-        $this->squares[BoardConfig::MIN_COORDINATE][3] = Square::create(
-            BoardConfig::MIN_COORDINATE,
+        $this->squares[3][BoardConfig::MIN_COORDINATE] = Square::create(
             3,
+            BoardConfig::MIN_COORDINATE,
             new Bishop(Side::WHITE)
         );
-        $this->squares[BoardConfig::MIN_COORDINATE][4] = Square::create(
-            BoardConfig::MIN_COORDINATE,
+        $this->squares[4][BoardConfig::MIN_COORDINATE] = Square::create(
             4,
+            BoardConfig::MIN_COORDINATE,
             new Queen(Side::WHITE)
         );
-        $this->squares[BoardConfig::MIN_COORDINATE][5] = Square::create(
-            BoardConfig::MIN_COORDINATE,
+        $this->squares[5][BoardConfig::MIN_COORDINATE] = Square::create(
             5,
+            BoardConfig::MIN_COORDINATE,
             new King(Side::WHITE)
         );
-        $this->squares[BoardConfig::MIN_COORDINATE][6] = Square::create(
-            BoardConfig::MIN_COORDINATE,
+        $this->squares[6][BoardConfig::MIN_COORDINATE] = Square::create(
             6,
+            BoardConfig::MIN_COORDINATE,
             new Bishop(Side::WHITE)
         );
-        $this->squares[BoardConfig::MIN_COORDINATE][7] = Square::create(
-            BoardConfig::MIN_COORDINATE,
+        $this->squares[7][BoardConfig::MIN_COORDINATE] = Square::create(
             7,
+            BoardConfig::MIN_COORDINATE,
             new Knight(Side::WHITE)
         );
-        $this->squares[BoardConfig::MIN_COORDINATE][8] = Square::create(
-            BoardConfig::MIN_COORDINATE,
+        $this->squares[8][BoardConfig::MIN_COORDINATE] = Square::create(
             8,
+            BoardConfig::MIN_COORDINATE,
             new Rook(Side::WHITE)
         );
+        #white pawns
         for ($i = 1; $i <= 8; $i++) {
-            $this->squares[2][$i] = Square::create(2, $i, new Pawn(Side::WHITE));
+            $this->squares[$i][2] = Square::create($i, 2, new Pawn(Side::WHITE));
         }
 
-        #создаем поля с черными
-        $this->squares[BoardConfig::MAX_COORDINATE][1] = Square::create(
-            BoardConfig::MAX_COORDINATE,
+        #black pieces
+        $this->squares[1][BoardConfig::MAX_COORDINATE] = Square::create(
             1,
+            BoardConfig::MAX_COORDINATE,
             new Rook(Side::BLACK)
         );
-        $this->squares[BoardConfig::MAX_COORDINATE][2] = Square::create(
-            BoardConfig::MAX_COORDINATE,
+        $this->squares[2][BoardConfig::MAX_COORDINATE] = Square::create(
             2,
+            BoardConfig::MAX_COORDINATE,
             new Knight(Side::BLACK)
         );
-        $this->squares[BoardConfig::MAX_COORDINATE][3] = Square::create(
-            BoardConfig::MAX_COORDINATE,
+        $this->squares[3][BoardConfig::MAX_COORDINATE] = Square::create(
             3,
+            BoardConfig::MAX_COORDINATE,
             new Bishop(Side::BLACK)
         );
-        $this->squares[BoardConfig::MAX_COORDINATE][4] = Square::create(
-            BoardConfig::MAX_COORDINATE,
+        $this->squares[4][BoardConfig::MAX_COORDINATE] = Square::create(
             4,
+            BoardConfig::MAX_COORDINATE,
             new Queen(Side::BLACK)
         );
-        $this->squares[BoardConfig::MAX_COORDINATE][5] = Square::create(
-            BoardConfig::MAX_COORDINATE,
+        $this->squares[5][BoardConfig::MAX_COORDINATE] = Square::create(
             5,
+            BoardConfig::MAX_COORDINATE,
             new King(Side::BLACK)
         );
-        $this->squares[BoardConfig::MAX_COORDINATE][6] = Square::create(
-            BoardConfig::MAX_COORDINATE,
+        $this->squares[6][BoardConfig::MAX_COORDINATE] = Square::create(
             6,
+            BoardConfig::MAX_COORDINATE,
             new Bishop(Side::BLACK)
         );
-        $this->squares[BoardConfig::MAX_COORDINATE][7] = Square::create(
-            BoardConfig::MAX_COORDINATE,
+        $this->squares[7][BoardConfig::MAX_COORDINATE] = Square::create(
             7,
+            BoardConfig::MAX_COORDINATE,
             new Knight(Side::BLACK)
         );
-        $this->squares[BoardConfig::MAX_COORDINATE][8] = Square::create(
-            BoardConfig::MAX_COORDINATE,
+        $this->squares[8][BoardConfig::MAX_COORDINATE] = Square::create(
             8,
+            BoardConfig::MAX_COORDINATE,
             new Rook(Side::BLACK)
         );
+        #black pawns
         for ($i = 1; $i <= 8; $i++) {
-            $this->squares[7][$i] = Square::create(2, $i, new Pawn(Side::BLACK));
+            $this->squares[$i][7] = Square::create($i, 2, new Pawn(Side::BLACK));
         }
 
-        #создаем пустые поля
+        #empty fields
         for ($i = 3; $i <= 6; $i++) {
             for ($j = 1; $j <= 8; $j++) {
                 $this->squares[$i][$j] = Square::create($i, $j);

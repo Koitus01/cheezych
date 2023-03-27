@@ -23,91 +23,96 @@ class BoardTest extends TestCase
         $b = new Board();
         $resetResult = $b->reset();
 
-        $expectedSquares[BoardConfig::MIN_COORDINATE][1] = Square::create(
-            BoardConfig::MIN_COORDINATE,
+        $expectedSquares[1][BoardConfig::MIN_COORDINATE] = Square::create(
             1,
+            BoardConfig::MIN_COORDINATE,
             new Rook(Side::WHITE)
         );
-        $expectedSquares[BoardConfig::MIN_COORDINATE][2] = Square::create(
-            BoardConfig::MIN_COORDINATE,
+        $expectedSquares[2][BoardConfig::MIN_COORDINATE] = Square::create(
             2,
+            BoardConfig::MIN_COORDINATE,
             new Knight(Side::WHITE)
         );
-        $expectedSquares[BoardConfig::MIN_COORDINATE][3] = Square::create(
-            BoardConfig::MIN_COORDINATE,
+        $expectedSquares[3][BoardConfig::MIN_COORDINATE] = Square::create(
             3,
+            BoardConfig::MIN_COORDINATE,
             new Bishop(Side::WHITE)
         );
-        $expectedSquares[BoardConfig::MIN_COORDINATE][4] = Square::create(
-            BoardConfig::MIN_COORDINATE,
+        $expectedSquares[4][BoardConfig::MIN_COORDINATE] = Square::create(
             4,
+            BoardConfig::MIN_COORDINATE,
             new Queen(Side::WHITE)
         );
-        $expectedSquares[BoardConfig::MIN_COORDINATE][5] = Square::create(
-            BoardConfig::MIN_COORDINATE,
+        $expectedSquares[5][BoardConfig::MIN_COORDINATE] = Square::create(
             5,
+            BoardConfig::MIN_COORDINATE,
             new King(Side::WHITE)
         );
-        $expectedSquares[BoardConfig::MIN_COORDINATE][6] = Square::create(
-            BoardConfig::MIN_COORDINATE,
+        $expectedSquares[6][BoardConfig::MIN_COORDINATE] = Square::create(
             6,
+            BoardConfig::MIN_COORDINATE,
             new Bishop(Side::WHITE)
         );
-        $expectedSquares[BoardConfig::MIN_COORDINATE][7] = Square::create(
-            BoardConfig::MIN_COORDINATE,
+        $expectedSquares[7][BoardConfig::MIN_COORDINATE] = Square::create(
             7,
+            BoardConfig::MIN_COORDINATE,
             new Knight(Side::WHITE)
         );
-        $expectedSquares[BoardConfig::MIN_COORDINATE][8] = Square::create(
-            BoardConfig::MIN_COORDINATE,
+        $expectedSquares[8][BoardConfig::MIN_COORDINATE] = Square::create(
             8,
+            BoardConfig::MIN_COORDINATE,
             new Rook(Side::WHITE)
         );
+        #white pawns
         for ($i = 1; $i <= 8; $i++) {
-            $expectedSquares[2][$i] = Square::create(2, $i, new Pawn(Side::WHITE));
+            $expectedSquares[$i][2] = Square::create($i, 2, new Pawn(Side::WHITE));
         }
 
-        #создаем поля с черными
-        $expectedSquares[BoardConfig::MAX_COORDINATE][1] = Square::create(
-            BoardConfig::MAX_COORDINATE,
+        #black pieces
+        $expectedSquares[1][BoardConfig::MAX_COORDINATE] = Square::create(
             1,
+            BoardConfig::MAX_COORDINATE,
             new Rook(Side::BLACK)
         );
-        $expectedSquares[BoardConfig::MAX_COORDINATE][2] = Square::create(
-            BoardConfig::MAX_COORDINATE,
+        $expectedSquares[2][BoardConfig::MAX_COORDINATE] = Square::create(
             2,
+            BoardConfig::MAX_COORDINATE,
             new Knight(Side::BLACK)
         );
-        $expectedSquares[BoardConfig::MAX_COORDINATE][3] = Square::create(
-            BoardConfig::MAX_COORDINATE,
+        $expectedSquares[3][BoardConfig::MAX_COORDINATE] = Square::create(
             3,
+            BoardConfig::MAX_COORDINATE,
             new Bishop(Side::BLACK)
         );
-        $expectedSquares[BoardConfig::MAX_COORDINATE][4] = Square::create(
-            BoardConfig::MAX_COORDINATE,
+        $expectedSquares[4][BoardConfig::MAX_COORDINATE] = Square::create(
             4,
+            BoardConfig::MAX_COORDINATE,
             new Queen(Side::BLACK)
         );
-        $expectedSquares[BoardConfig::MAX_COORDINATE][5] = Square::create(
-            BoardConfig::MAX_COORDINATE,
+        $expectedSquares[5][BoardConfig::MAX_COORDINATE] = Square::create(
             5,
+            BoardConfig::MAX_COORDINATE,
             new King(Side::BLACK)
         );
-        $expectedSquares[BoardConfig::MAX_COORDINATE][6] = Square::create(
-            BoardConfig::MAX_COORDINATE,
+        $expectedSquares[6][BoardConfig::MAX_COORDINATE] = Square::create(
             6,
+            BoardConfig::MAX_COORDINATE,
             new Bishop(Side::BLACK)
         );
-        $expectedSquares[BoardConfig::MAX_COORDINATE][7] = Square::create(
-            BoardConfig::MAX_COORDINATE,
+        $expectedSquares[7][BoardConfig::MAX_COORDINATE] = Square::create(
             7,
+            BoardConfig::MAX_COORDINATE,
             new Knight(Side::BLACK)
         );
-        $expectedSquares[BoardConfig::MAX_COORDINATE][8] = Square::create(
-            BoardConfig::MAX_COORDINATE,
+        $expectedSquares[8][BoardConfig::MAX_COORDINATE] = Square::create(
             8,
+            BoardConfig::MAX_COORDINATE,
             new Rook(Side::BLACK)
         );
+        #black pawns
+        for ($i = 1; $i <= 8; $i++) {
+            $expectedSquares[$i][7] = Square::create($i, 2, new Pawn(Side::BLACK));
+        }
 
         $this->assertEquals($expectedSquares[BoardConfig::MIN_COORDINATE], $resetResult[BoardConfig::MIN_COORDINATE]);
         $this->assertEquals($expectedSquares[BoardConfig::MAX_COORDINATE], $resetResult[BoardConfig::MAX_COORDINATE]);
@@ -118,8 +123,8 @@ class BoardTest extends TestCase
     {
         $b = new Board();
         $b->reset();
-        $expectedSquare = Square::create(1,2, new Knight(Side::WHITE));
-        $result = $b->getSquare(1, 2);
+        $expectedSquare = Square::create(1,1, new Rook(Side::WHITE));
+        $result = $b->getSquare(1, 1);
 
         $this->assertEquals($expectedSquare, $result);
     }

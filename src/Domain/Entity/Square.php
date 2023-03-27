@@ -15,10 +15,10 @@ class Square
      * @param int $x
      * @param int $y
      */
-    public function __construct(int $y, int $x)
+    public function __construct(int $x, int $y)
     {
-        $this->y = $y;
         $this->x = $x;
+        $this->y = $y;
     }
 
     public function setPiece(?AbstractPiece $piece): static
@@ -35,8 +35,8 @@ class Square
         return $this->piece;
     }
 
-    static function create(int $y, int $x, ?AbstractPiece $piece = null): Square
+    static function create(int $x, int $y, ?AbstractPiece $piece = null): Square
     {
-        return (new self($y, $x))->setPiece($piece);
+        return (new self($x, $y))->setPiece($piece);
     }
 }
