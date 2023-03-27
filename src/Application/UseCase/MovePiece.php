@@ -11,10 +11,16 @@ use App\Domain\Enums\PieceName;
 use App\Domain\Exceptions\UnknownXCoordinateException;
 use App\Domain\Exceptions\UnknownYCoordinateException;
 use App\Domain\Repository\GameRepositoryInterface;
-use Exception;
 
 class MovePiece
 {
+    public const COORDINATES_NOT_CHANGED_ERROR = 'Coordinates not changed';
+    public const EMPTY_FROM_SQUARE_ERROR = 'From square does not contain piece';
+    public const INVALID_MOVEMENT_ERROR = 'Invalid movement for this piece';
+    public const INVALID_CAPTURE_ERROR = 'Invalid capture movement';
+    public const MOVE_ON_SAME_COLOR_PIECE_ERROR = 'From and to squares have same color pieces';
+    public const MOVE_HAVE_INTERSECTION_PIECES = 'Movement have intersections';
+
     private GameRepositoryInterface $gameRepository;
     private ?AbstractPiece $pieceFrom;
     private ?AbstractPiece $pieceTo;
@@ -34,11 +40,11 @@ class MovePiece
 
 
     /**
-     * TODO: move validate to another class??
+     * TODO: move validation to another class?? Error consts to separate file (m.b enum)?
      * @throws UnknownXCoordinateException
      * @throws UnknownYCoordinateException
      */
-    public function execute(int $gameId, CoordinatesDTO $moveFrom, CoordinatesDTO $moveTo)
+    public function execute(int $gameId, CoordinatesDTO $moveFrom, CoordinatesDTO $moveTo, &$errorMessage = '')
     {
         $game = $this->gameRepository->findById($gameId);
         $this->board = $game->getBoard();
@@ -56,29 +62,35 @@ class MovePiece
         );
 
         if ($moveFrom->y === $moveTo->y && $moveFrom->x === $moveTo->x) {
+            $errorMessage = self::COORDINATES_NOT_CHANGED_ERROR;
             return false;
         }
 
         if (!$this->pieceFrom) {
+            $errorMessage = self::EMPTY_FROM_SQUARE_ERROR;
             return false;
         }
 
         #if there is no piece on target square, we validate movement
         if (!$this->pieceTo && !$this->validateMovement()) {
+            $errorMessage = self::INVALID_MOVEMENT_ERROR;
             return false;
         }
 
         #if there is enemy piece on target square, we validate capture
         if ($this->pieceTo && $this->pieceFrom->getSide() !== $this->pieceTo->getSide() && !$this->validateCapture()) {
+            $errorMessage = self::INVALID_CAPTURE_ERROR;
             return false;
         }
 
         #if there is allied piece on target square, we have no validate
         if ($this->pieceFrom->getSide() === $this->pieceTo?->getSide()) {
+            $errorMessage = self::MOVE_ON_SAME_COLOR_PIECE_ERROR;
             return false;
         }
 
-        if (!$this->validateInterfering()) {
+        if (!$this->validateIntersections()) {
+            $errorMessage = self::MOVE_HAVE_INTERSECTION_PIECES;
             return false;
         }
 
@@ -95,43 +107,39 @@ class MovePiece
         return $this->pieceFrom->isValidCapture($this->movementCoordinatesDTO);
     }
 
-    private function validateInterfering(): bool
+    private function validateIntersections(): bool
     {
         #no validate for knight, because he can step over pieces
         if ($this->pieceFrom->getName() === PieceName::KNIGHT) {
             return true;
         }
 
-        $xDiff = abs($this->squareFrom->x - $this->squareTo->x);
-        $yDiff = abs($this->squareFrom->y - $this->squareTo->y);
 
-        #catch vertical move
-        if ($yDiff > 0 && $xDiff === 0) {
-            for ($y = $this->squareFrom->y + 1; $y <= $this->squareTo->y; $y++) {
-                if (!$this->board->getSquare($this->squareFrom->x, $y)->getPiece()) {
-                    return false;
-                }
+
+        foreach (range($this->squareFrom->y, $this->squareTo->y) as $key => $y) {
+            if ($key === 0) {
+                continue;
             }
-/*            for ($i = $this->squareTo->y + 1; $i <= $this->squareFrom->y; $i++) {
-                if (!$this->board->getSquare($this->squareFrom->x, $i)->getPiece()) {
-                    return false;
-                }
-            }*/
+            $square = $this->board->getSquare($this->squareFrom->x, $y);
+            if ($square->getPiece()) {
+                return false;
+            }
         }
 
-        #catch horizontal move
-        if ($xDiff > 0 && $yDiff === 0) {
-            for ($i = $this->squareFrom->x + 1; $i <= $this->squareTo->x; $i++) {
-                if (isset($this->squares[$this->squareFrom->y][$i])) {
-                    return false;
-                }
+        foreach (range($this->squareFrom->x, $this->squareTo->x) as $key => $x) {
+            #skipping first movement
+            if ($key === 0) {
+                continue;
             }
-            for ($i = $this->squareTo->x + 1; $i <= $this->squareFrom->x; $i++) {
-                if (isset($this->squares[$this->squareFrom->y][$i])) {
-                    return false;
-                }
+            $square = $this->board->getSquare($this->squareFrom->y, $x);
+            if ($square->getPiece()) {
+                return false;
             }
         }
+/*        for ($yFrom; $yFrom !== $yTo; $yFrom++) {
+
+        }*/
+
 
         return true;
     }

@@ -96,10 +96,12 @@ class MovePieceTest extends TestCase
         $result = $mp->execute(
             1,
             new CoordinatesDTO($coordinates['xFrom'], $coordinates['yFrom']),
-            new CoordinatesDTO($coordinates['xTo'], $coordinates['yTo'])
+            new CoordinatesDTO($coordinates['xTo'], $coordinates['yTo']),
+            $errorMessage
         );
 
         $this->assertFalse($result);
+        $this->assertEquals(MovePiece::MOVE_HAVE_INTERSECTION_PIECES, $errorMessage);
     }
 
     private static function createValidCleanGame(): Game
@@ -149,6 +151,24 @@ class MovePieceTest extends TestCase
                 'yFrom' => 1,
                 'xTo' => 3,
                 'yTo' => 3,
+            ]
+        ];
+
+        yield 'coordinates: 3, 1, 5, 3' => [
+            [
+                'xFrom' => 3,
+                'yFrom' => 1,
+                'xTo' => 5,
+                'yTo' => 3,
+            ]
+        ];
+
+        yield 'coordinates: 1, 1, 8, 1' => [
+            [
+                'xFrom' => 1,
+                'yFrom' => 1,
+                'xTo' => 8,
+                'yTo' => 1,
             ]
         ];
     }
