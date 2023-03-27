@@ -29,14 +29,14 @@ class Board
     public function getSquare(int $x, int $y): Square
     {
         if (!isset($this->squares[$x])) {
-            throw new UnknownYCoordinateException;
-        }
-
-        if (!isset($this->squares[$x][$y])) {
             throw new UnknownXCoordinateException;
         }
 
-        return $this->squares[$y][$x];
+        if (!isset($this->squares[$x][$y])) {
+            throw new UnknownYCoordinateException;
+        }
+
+        return $this->squares[$x][$y];
     }
 
     public function getSquares(): array
@@ -44,7 +44,7 @@ class Board
         return $this->squares;
     }
 
-    public function reset()
+    public function reset(): array
     {
         $this->squares = [];
 
@@ -141,9 +141,9 @@ class Board
         }
 
         #empty fields
-        for ($i = 3; $i <= 6; $i++) {
-            for ($j = 1; $j <= 8; $j++) {
-                $this->squares[$i][$j] = Square::create($i, $j);
+        for ($x = BoardConfig::MIN_COORDINATE; $x <= BoardConfig::MAX_COORDINATE; $x++) {
+            for ($j = 3; $j <= 6; $j++) {
+                $this->squares[$x][$j] = Square::create($x, $j);
             }
         }
 

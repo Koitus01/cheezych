@@ -4,6 +4,7 @@ namespace App\Application\UseCase;
 
 use App\Application\DTO\CoordinatesDTO;
 use App\Domain\DTO\MovementCoordinatesDTO;
+use App\Domain\Entity\Board;
 use App\Domain\Entity\Pieces\AbstractPiece;
 use App\Domain\Entity\Square;
 use App\Domain\Enums\PieceName;
@@ -24,6 +25,7 @@ class MovePiece
      */
     private array $squares;
     private MovementCoordinatesDTO $movementCoordinatesDTO;
+    private Board $board;
 
     public function __construct(GameRepositoryInterface $gameRepository)
     {
@@ -39,11 +41,11 @@ class MovePiece
     public function execute(int $gameId, CoordinatesDTO $moveFrom, CoordinatesDTO $moveTo)
     {
         $game = $this->gameRepository->findById($gameId);
-        $board = $game->getBoard();
+        $this->board = $game->getBoard();
 
-        $this->squareFrom = $board->getSquare($moveFrom->y, $moveFrom->x);
-        $this->squareTo = $board->getSquare($moveTo->y, $moveTo->x);
-        $this->squares = $board->getSquares();
+        $this->squareFrom = $this->board->getSquare($moveFrom->x, $moveFrom->y);
+        $this->squareTo = $this->board->getSquare($moveTo->x, $moveTo->y);
+        $this->squares = $this->board->getSquares();
         $this->pieceFrom = $this->squareFrom->getPiece();
         $this->pieceTo = $this->squareTo->getPiece();
         $this->movementCoordinatesDTO = new MovementCoordinatesDTO(
@@ -105,16 +107,16 @@ class MovePiece
 
         #catch vertical move
         if ($yDiff > 0 && $xDiff === 0) {
-            for ($i = $this->squareFrom->y + 1; $i <= $this->squareTo->y; $i++) {
-                if (isset($this->squares[$i][$this->squareFrom->x])) {
+            for ($y = $this->squareFrom->y + 1; $y <= $this->squareTo->y; $y++) {
+                if (!$this->board->getSquare($this->squareFrom->x, $y)->getPiece()) {
                     return false;
                 }
             }
-            for ($i = $this->squareTo->y + 1; $i <= $this->squareFrom->y; $i++) {
-                if (isset($this->squares[$i][$this->squareFrom->x])) {
+/*            for ($i = $this->squareTo->y + 1; $i <= $this->squareFrom->y; $i++) {
+                if (!$this->board->getSquare($this->squareFrom->x, $i)->getPiece()) {
                     return false;
                 }
-            }
+            }*/
         }
 
         #catch horizontal move

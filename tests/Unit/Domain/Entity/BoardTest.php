@@ -23,100 +23,38 @@ class BoardTest extends TestCase
         $b = new Board();
         $resetResult = $b->reset();
 
-        $expectedSquares[1][BoardConfig::MIN_COORDINATE] = Square::create(
-            1,
-            BoardConfig::MIN_COORDINATE,
-            new Rook(Side::WHITE)
-        );
-        $expectedSquares[2][BoardConfig::MIN_COORDINATE] = Square::create(
-            2,
-            BoardConfig::MIN_COORDINATE,
-            new Knight(Side::WHITE)
-        );
-        $expectedSquares[3][BoardConfig::MIN_COORDINATE] = Square::create(
-            3,
-            BoardConfig::MIN_COORDINATE,
-            new Bishop(Side::WHITE)
-        );
-        $expectedSquares[4][BoardConfig::MIN_COORDINATE] = Square::create(
-            4,
-            BoardConfig::MIN_COORDINATE,
-            new Queen(Side::WHITE)
-        );
-        $expectedSquares[5][BoardConfig::MIN_COORDINATE] = Square::create(
-            5,
-            BoardConfig::MIN_COORDINATE,
-            new King(Side::WHITE)
-        );
-        $expectedSquares[6][BoardConfig::MIN_COORDINATE] = Square::create(
-            6,
-            BoardConfig::MIN_COORDINATE,
-            new Bishop(Side::WHITE)
-        );
-        $expectedSquares[7][BoardConfig::MIN_COORDINATE] = Square::create(
-            7,
-            BoardConfig::MIN_COORDINATE,
-            new Knight(Side::WHITE)
-        );
-        $expectedSquares[8][BoardConfig::MIN_COORDINATE] = Square::create(
-            8,
-            BoardConfig::MIN_COORDINATE,
-            new Rook(Side::WHITE)
-        );
-        #white pawns
-        for ($i = 1; $i <= 8; $i++) {
-            $expectedSquares[$i][2] = Square::create($i, 2, new Pawn(Side::WHITE));
+        for ($x = 1 ; $x <= 8; $x++) {
+            $this->assertEquals(new Pawn(Side::WHITE), $b->getSquare($x, 2)->getPiece());
         }
+        $this->assertEquals(new King(Side::WHITE), $b->getSquare(5, 1)->getPiece());
+        $this->assertEquals(new King(Side::BLACK), $b->getSquare(5, 8)->getPiece());
+        $this->assertEquals(new Queen(Side::WHITE), $b->getSquare(4, 1)->getPiece());
+        $this->assertEquals(new Queen(Side::BLACK), $b->getSquare(4, 8)->getPiece());
+        $this->assertEquals(new Rook(Side::WHITE), $b->getSquare(1, 1)->getPiece());
+        $this->assertEquals(new Rook(Side::WHITE), $b->getSquare(8, 1)->getPiece());
+        $this->assertEquals(new Rook(Side::BLACK), $b->getSquare(1, 8)->getPiece());
+        $this->assertEquals(new Rook(Side::BLACK), $b->getSquare(8, 8)->getPiece());
+        $this->assertEquals(new Bishop(Side::WHITE), $b->getSquare(3, 1)->getPiece());
+        $this->assertEquals(new Bishop(Side::WHITE), $b->getSquare(6, 1)->getPiece());
+        $this->assertEquals(new Bishop(Side::BLACK), $b->getSquare(3, 8)->getPiece());
+        $this->assertEquals(new Bishop(Side::BLACK), $b->getSquare(6, 8)->getPiece());
+        $this->assertEquals(new Knight(Side::WHITE), $b->getSquare(2, 1)->getPiece());
+        $this->assertEquals(new Knight(Side::WHITE), $b->getSquare(7, 1)->getPiece());
+        $this->assertEquals(new Knight(Side::BLACK), $b->getSquare(2, 8)->getPiece());
+        $this->assertEquals(new Knight(Side::BLACK), $b->getSquare(7, 8)->getPiece());
+        $this->assertNull($resetResult[rand(1, 8)][rand(3, 6)]->getPiece());
+    }
 
-        #black pieces
-        $expectedSquares[1][BoardConfig::MAX_COORDINATE] = Square::create(
-            1,
-            BoardConfig::MAX_COORDINATE,
-            new Rook(Side::BLACK)
-        );
-        $expectedSquares[2][BoardConfig::MAX_COORDINATE] = Square::create(
-            2,
-            BoardConfig::MAX_COORDINATE,
-            new Knight(Side::BLACK)
-        );
-        $expectedSquares[3][BoardConfig::MAX_COORDINATE] = Square::create(
-            3,
-            BoardConfig::MAX_COORDINATE,
-            new Bishop(Side::BLACK)
-        );
-        $expectedSquares[4][BoardConfig::MAX_COORDINATE] = Square::create(
-            4,
-            BoardConfig::MAX_COORDINATE,
-            new Queen(Side::BLACK)
-        );
-        $expectedSquares[5][BoardConfig::MAX_COORDINATE] = Square::create(
-            5,
-            BoardConfig::MAX_COORDINATE,
-            new King(Side::BLACK)
-        );
-        $expectedSquares[6][BoardConfig::MAX_COORDINATE] = Square::create(
-            6,
-            BoardConfig::MAX_COORDINATE,
-            new Bishop(Side::BLACK)
-        );
-        $expectedSquares[7][BoardConfig::MAX_COORDINATE] = Square::create(
-            7,
-            BoardConfig::MAX_COORDINATE,
-            new Knight(Side::BLACK)
-        );
-        $expectedSquares[8][BoardConfig::MAX_COORDINATE] = Square::create(
-            8,
-            BoardConfig::MAX_COORDINATE,
-            new Rook(Side::BLACK)
-        );
-        #black pawns
-        for ($i = 1; $i <= 8; $i++) {
-            $expectedSquares[$i][7] = Square::create($i, 2, new Pawn(Side::BLACK));
+    public function testEmptySquaresAfterReset()
+    {
+        $b = new Board();
+        $b->reset();
+
+        for ($x = BoardConfig::MIN_COORDINATE; $x <= BoardConfig::MAX_COORDINATE; $x++) {
+            for ($y = 3; $y <= 6; $y++) {
+                $this->assertNull($b->getSquare($x, $y)->getPiece());
+            }
         }
-
-        $this->assertEquals($expectedSquares[BoardConfig::MIN_COORDINATE], $resetResult[BoardConfig::MIN_COORDINATE]);
-        $this->assertEquals($expectedSquares[BoardConfig::MAX_COORDINATE], $resetResult[BoardConfig::MAX_COORDINATE]);
-        $this->assertNull($resetResult[rand(3, 6)][rand(1, 8)]->getPiece());
     }
 
     public function testGetSquare()
@@ -141,7 +79,7 @@ class BoardTest extends TestCase
 
         $b = new Board();
         $b->reset();
-        $b->getSquare(48, 2);
+        $b->getSquare(2, 48);
     }
 
     public function testGetSquareWithUnknownXCoordinate()
@@ -150,6 +88,6 @@ class BoardTest extends TestCase
 
         $b = new Board();
         $b->reset();
-        $b->getSquare(1, 25);
+        $b->getSquare(25, 1);
     }
 }

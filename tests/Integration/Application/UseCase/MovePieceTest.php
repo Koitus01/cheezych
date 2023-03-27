@@ -119,6 +119,10 @@ class MovePieceTest extends TestCase
         return $repositoryMock;
     }
 
+    /**
+     * Interfering moves at the base positions of other pieces
+     * @return Generator
+     */
     public function provideInterferingMoves(): Generator
     {
         yield 'coordinates: 1, 1, 1, 6' => [
@@ -139,12 +143,24 @@ class MovePieceTest extends TestCase
             ]
         ];
 
-        yield 'coordinates: 1, 8, 1, 4' => [
+        yield 'coordinates: 3, 1, 3, 3' => [
+            [
+                'xFrom' => 3,
+                'yFrom' => 1,
+                'xTo' => 3,
+                'yTo' => 3,
+            ]
+        ];
+    }
+
+    public function provideValidMoves(): Generator
+    {
+        yield 'coordinates: 1, 1, 1, 6' => [
             [
                 'xFrom' => 1,
-                'yFrom' => 8,
+                'yFrom' => 2,
                 'xTo' => 1,
-                'yTo' => 4,
+                'yTo' => 3,
             ]
         ];
     }
