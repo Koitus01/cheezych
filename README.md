@@ -6,3 +6,5 @@ Created with Symfony. Code built on a hexagonal architecture with test driven de
 
 Changes are made in a new separate branch with creating pull request. No changes without tests.
 
+Frontend will be in a separate project
+
